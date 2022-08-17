@@ -1,12 +1,17 @@
 import React, { useState, useRef } from 'react'
 import { useRouter } from 'next/router'
+import Product from '../../models/Product'
+import mongoose from 'mongoose'
+import { ToastContainer, toast } from 'react-toastify';
 
-const Product = ({ addToCart }) => {
+const Products = ({ addToCart, product, varients, buyNow }) => {
   const router = useRouter()
   const { slug } = router.query
   const heart = useRef()
   const [Pin, setPin] = useState()
   const [Service, setService] = useState()
+  const [color, setcolor] = useState(product.color)
+  const [size, setsize] = useState(product.size)
 
   const like = () => {
     if (heart.current.classList.contains('text-gray-500')) {
@@ -19,15 +24,53 @@ const Product = ({ addToCart }) => {
     }
   }
 
+
+  const refVarient = (newColor, newSize) => {
+    // console.log(varients)
+    // console.log(newColor,newSize)
+    // console.log(varients[newColor][newSize])
+    let url = `http://localhost:3000/products/${varients[newColor][newSize]['slug']}`
+    window.location = url
+  }
+
   const checkServiceAbility = async () => {
     let pins = await fetch('http://localhost:3000/api/pincode')
     let pinsJson = await pins.json()
     if (pinsJson.includes(parseInt(Pin))) {
       setService(true)
-    } else if (Pin == undefined) {
+      toast.success('Your Pin Code is serviceable!', {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } else if (Service == undefined || Service == 'Empty') {
       setService('Empty')
+      console.log(Service)
+      toast.warn('Please, Enter the pic code to check.', {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     } else {
       setService(false)
+      console.log(Pin)
+      toast.error('Sorry, Pin Code not serviceable', {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
     setPin('')
   }
@@ -35,14 +78,28 @@ const Product = ({ addToCart }) => {
   return (
     <>
       <section className="text-gray-400 bg-gray-900 body-font overflow-hidden">
+        <ToastContainer
+          position="top-center"
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
         <div className="container px-5 py-16 mx-auto">
           <div className="lg:w-4/5 mx-auto flex flex-wrap">
             {/* <img alt="ecommerce" className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded" src="https://dummyimage.com/400x400"/> */}
             <img alt="ecommerce" className="lg:w-1/2 w-full lg:h-auto px-16 object-cover object-top rounded"
-              src={`/${slug}.jpg`} />
+              src={product.img} />
             <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
               <h2 className="text-sm title-font text-gray-500 tracking-widest">HSD BRAND</h2>
-              <h1 className="text-white text-3xl title-font font-medium mb-1">{slug} (Ware the Code)</h1>
+              <h1 className="text-white text-3xl title-font font-medium mb-1">{product.title} (Ware the Code)</h1>
+
+              {/* Reviews ICONS  */}
+
               <div className="flex mb-4">
                 <span className="flex items-center">
                   <svg fill="currentColor" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-4 h-4 text-green-400" viewBox="0 0 24 24">
@@ -63,39 +120,76 @@ const Product = ({ addToCart }) => {
                   <span className="ml-3">4 Reviews</span>
                 </span>
                 <span className="flex ml-3 pl-3 py-2 border-l-2 border-gray-800 text-gray-500 space-x-2">
-                  <a>
-                    <svg fill="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-5 h-5" viewBox="0 0 24 24">
+                  <a className='fill-blue-600'>
+                    <svg strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-5 h-5" viewBox="0 0 24 24">
                       <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
                     </svg>
                   </a>
-                  <a>
-                    <svg fill="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-5 h-5" viewBox="0 0 24 24">
+                  <a className='fill-blue-500'>
+                    <svg strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-5 h-5" viewBox="0 0 24 24">
                       <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path>
                     </svg>
                   </a>
-                  <a>
-                    <svg fill="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-5 h-5" viewBox="0 0 24 24">
+                  <a className='fill-green-500'>
+                    <svg strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-5 h-5" viewBox="0 0 24 24">
                       <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"></path>
                     </svg>
                   </a>
                 </span>
               </div>
-              <p className="leading-relaxed">Fam locavore kickstarter distillery. Mixtape chillwave tumeric sriracha taximy chia microdosing tilde DIY. XOXO fam indxgo juiceramps cornhole raw denim forage brooklyn. Everyday carry +1 seitan poutine tumeric. Gastropub blue bottle austin listicle pour-over, neutra jean shorts keytar banjo tattooed umami cardigan.</p>
+
+              {/* Description */}
+
+              <p className="leading-relaxed">{product.desc}</p>
               <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-800 mb-5">
                 <div className="flex">
+
                   <span className="mr-3">Color</span>
-                  <button className="border-2 border-gray-800 rounded-full w-6 h-6 focus:outline-none"></button>
-                  <button className="border-2 border-gray-800 ml-1 bg-gray-700 rounded-full w-6 h-6 focus:outline-none"></button>
-                  <button className="border-2 border-gray-800 ml-1 bg-green-500 rounded-full w-6 h-6 focus:outline-none"></button>
+
+                  {Object.keys(varients).includes('black') && Object.keys(varients['black']).includes(size) &&
+                    <button onClick={() => refVarient('black', size)} className={`border-2 ml-1 bg-gray-700 rounded-full w-6 h-6 focus:outline-none ${color == 'black' ? 'border-white' : 'border-gray-700'}`}></button>
+                  }
+                  {Object.keys(varients).includes('red') && Object.keys(varients['red']).includes(size) &&
+                    <button onClick={() => refVarient('red', size)} className={`border-2 ml-1 bg-red-700 rounded-full w-6 h-6 focus:outline-none ${color == 'red' ? 'border-white' : 'border-gray-700'}`}></button>
+                  }
+                  {Object.keys(varients).includes('yellow') && Object.keys(varients['yellow']).includes(size) &&
+                    <button onClick={() => refVarient('yellow', size)} className={`border-2 ml-1 bg-yellow-700 rounded-full w-6 h-6 focus:outline-none ${color == 'yellow' ? 'border-white' : 'border-gray-700'}`}></button>
+                  }
+                  {Object.keys(varients).includes('green') && Object.keys(varients['green']).includes(size) &&
+                    <button onClick={() => refVarient('green', size)} className={`border-2 ml-1 bg-green-700 rounded-full w-6 h-6 focus:outline-none ${color == 'green' ? 'border-white' : 'border-gray-700'}`}></button>
+                  }
+                  {Object.keys(varients).includes('blue') && Object.keys(varients['blue']).includes(size) &&
+                    <button onClick={() => refVarient('blue', size)} className={`border-2 ml-1 bg-blue-700 rounded-full w-6 h-6 focus:outline-none ${color == 'blue' ? 'border-white' : 'border-gray-700'}`}></button>
+                  }
+                  {Object.keys(varients).includes('purple') && Object.keys(varients['purple']).includes(size) &&
+                    <button onClick={() => refVarient('purple', size)} className={`border-2 ml-1 bg-purple-700 rounded-full w-6 h-6 focus:outline-none ${color == 'purple' ? 'border-white' : 'border-gray-700'}`}></button>
+                  }
+                  {Object.keys(varients).includes('white') && Object.keys(varients['white']).includes(size) &&
+                    <button onClick={() => refVarient('white', size)} className={`border-2 ml-1 bg-white rounded-full w-6 h-6 focus:outline-none ${color == 'white' ? 'border-white' : 'border-gray-700'}`}></button>
+                  }
+
                 </div>
                 <div className="flex ml-6 items-center">
                   <span className="mr-3">Size</span>
                   <div className="relative">
-                    <select className="rounded border border-gray-700 focus:ring-2 focus:ring-green-900 bg-transparent appearance-none py-2 focus:outline-none focus:border-green-500 text-gray-400 pl-3 pr-10">
-                      <option>SM</option>
-                      <option>M</option>
-                      <option>L</option>
-                      <option>XL</option>
+
+                    <select value={size} onChange={(e) => refVarient(color, e.target.value)} className="rounded border border-gray-700 focus:ring-2 focus:ring-green-900 bg-transparent appearance-none py-2 focus:outline-none focus:border-green-500 text-gray-400 pl-3 pr-10">
+                      {console.log(Object.keys(varients[color]).includes('XL'))}
+                      {/* {Object.keys(varients).map(itemColor => {
+                        // let colors = ['black', 'green', 'blue', 'purple', 'gray', 'red', 'white']
+                        let sizes = ['S', 'M', 'L', 'XL', 'XXL']
+                        let avilableSizes = []
+                        for(let size in varients[itemColor]){
+                            size in avilableSizes ? 'None' : avilableSizes.push(JSON.parse(JSON.stringify(size)))
+                        }
+                        console.log(avilableSizes)
+                      })} */}
+
+                      {Object.keys(varients[color]).includes('S') && <option value={'S'}>S</option>}
+                      {Object.keys(varients[color]).includes('M') && <option value={'M'}>M</option>}
+                      {Object.keys(varients[color]).includes('L') && <option value={'L'}>L</option>}
+                      {Object.keys(varients[color]).includes('XL') && <option value={'XL'}>XL</option>}
+                      {Object.keys(varients[color]).includes('XXL') && <option value={'XXL'}>XXL</option>}
                     </select>
                     <span className="absolute right-0 top-0 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center">
                       <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-4 h-4" viewBox="0 0 24 24">
@@ -106,14 +200,14 @@ const Product = ({ addToCart }) => {
                 </div>
               </div>
               <div className="flex">
-                <span className="title-font font-medium text-2xl text-white">$58.00</span>
+                <span className="title-font font-medium text-2xl text-white">${product.price}</span>
 
-                <button className="flex ml-10 text-white bg-green-500 border-0 py-2 px-2 md:px-3 md:ml-20 focus:outline-none hover:bg-green-600 rounded">Buy Now</button>
+                <button onClick={() => buyNow(product.slug, product.title, product.price, product.size, product.color, 1)} className="flex ml-10 text-white bg-green-500 border-0 py-2 px-2 md:px-3 md:ml-20 focus:outline-none hover:bg-green-600 rounded">Buy Now</button>
 
                 {/* Add TO Cart */}
 
                 <button
-                  onClick={() => addToCart('check', 'Tshirt', 58, 'Xl', 'red', 1)}
+                  onClick={() => addToCart(product.slug, product.title, product.price, product.size, product.color, 1)}
                   className="flex ml-2 text-white bg-green-500 border-0 py-2 px-2 md:px-6 md:ml-5 focus:outline-none hover:bg-green-600 rounded"
                 >Add To Cart
                 </button>
@@ -123,17 +217,17 @@ const Product = ({ addToCart }) => {
                   </svg>
                 </button>
               </div>
-              <dev className="pincode flex space-x-2 text-sm mt-6">
+              <div className="pincode flex space-x-2 text-sm mt-6">
                 <input onChange={(event) => setPin(event.target.value)} placeholder='Enter Your Pin Code' className='px-2 text-black rounded-md border-green-700 focus:outline-none focus:border-green-300 border-2' type="text" />
                 <button onClick={checkServiceAbility} className="text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded">Check Service</button>
-              </dev>
+              </div>
 
               {/* Check Service Ability. */}
 
-              {!Service && Service != null && Service != 'Empty' && <div className="text-red-700">
+              {!Service && Service != null && Service !== 'Empty' && <div className="text-red-700">
                 <h3>Sorry,We do not Diliver to this pin code.</h3>
               </div>}
-              {Service && Service != null && Service != 'Empty' && <div className="text-green-700">
+              {Service && Service != null && Service !== 'Empty' && <div className="text-green-700">
                 <h3>We Diliver to this pin code.</h3>
               </div>}
 
@@ -148,4 +242,31 @@ const Product = ({ addToCart }) => {
   )
 }
 
-export default Product
+export async function getServerSideProps(context) {
+  if (!mongoose.connection.readyState) {
+    await mongoose.connect(process.env.MONGO_URI)
+
+  }
+  let product = await Product.findOne({ slug: context.query.slug })
+  let varients = await Product.find({ title: product.title })
+  let colorSizeSlug = {} // { red: { XL: { slug: "Programer T-shirt" } } }
+
+
+  for (let item of varients) {
+    if (Object.keys(colorSizeSlug).includes(item.color)) {
+      colorSizeSlug[item.color][item.size] = { slug: item.slug }
+    }
+    else {
+      colorSizeSlug[item.color] = {}
+      colorSizeSlug[item.color][item.size] = { slug: item.slug }
+      // { color :  }
+      // { color : { size : { slug: "Programer T-shirt" } } }
+    }
+  }
+
+  return {
+    props: { product: JSON.parse(JSON.stringify(product)), varients: JSON.parse(JSON.stringify(colorSizeSlug)) },
+  }
+}
+
+export default Products

@@ -20,11 +20,29 @@ const Footer = () => {
                             </a>
                         </Link>
 
-                        <p className="mt-2 text-sm text-gray-500">Air plant banjo lyft occupy retro adaptogen indego</p>
+                        <p className="mt-2 text-sm text-gray-500">Ware the &lt;HSD/&gt;</p>
+                        <p className='text-sm text-gray-500'> Premium  codding T-shirt, hoddies, stickers and mugs. </p>
                     </div>
                     <div className="flex-grow flex flex-wrap md:pl-20 -mb-10 md:mt-0 mt-10 md:text-left text-center">
                         <div className="lg:w-1/4 md:w-1/2 w-full px-4">
-                            <h2 className="title-font font-medium text-white tracking-widest text-sm mb-3">CATEGORIES</h2>
+                            <h2 className="title-font font-medium text-white tracking-widest text-sm mb-3">SHOPE</h2>
+                            <nav className="list-none mb-10">
+                                <li>
+                                    <Link href={'/tshirts'}><a className="text-gray-400 hover:text-white">T-Shirt</a></Link>
+                                </li>
+                                <li>
+                                    <Link href={'/hoodies'}><a className="text-gray-400 hover:text-white">Hoddies</a></Link>
+                                </li>
+                                <li>
+                                    <Link href={'/stickers'}><a className="text-gray-400 hover:text-white">Stickers</a></Link>
+                                </li>
+                                <li>
+                                    <Link href={'/mugs'}><a className="text-gray-400 hover:text-white">Mugs</a></Link>
+                                </li>
+                            </nav>
+                        </div>
+                        <div className="lg:w-1/4 md:w-1/2 w-full px-4">
+                            <h2 className="title-font font-medium text-white tracking-widest text-sm mb-3">POLICY</h2>
                             <nav className="list-none mb-10">
                                 <li>
                                     <a className="text-gray-400 hover:text-white">First Link</a>
@@ -41,24 +59,7 @@ const Footer = () => {
                             </nav>
                         </div>
                         <div className="lg:w-1/4 md:w-1/2 w-full px-4">
-                            <h2 className="title-font font-medium text-white tracking-widest text-sm mb-3">CATEGORIES</h2>
-                            <nav className="list-none mb-10">
-                                <li>
-                                    <a className="text-gray-400 hover:text-white">First Link</a>
-                                </li>
-                                <li>
-                                    <a className="text-gray-400 hover:text-white">Second Link</a>
-                                </li>
-                                <li>
-                                    <a className="text-gray-400 hover:text-white">Third Link</a>
-                                </li>
-                                <li>
-                                    <a className="text-gray-400 hover:text-white">Fourth Link</a>
-                                </li>
-                            </nav>
-                        </div>
-                        <div className="lg:w-1/4 md:w-1/2 w-full px-4">
-                            <h2 className="title-font font-medium text-white tracking-widest text-sm mb-3">CATEGORIES</h2>
+                            <h2 className="title-font font-medium text-white tracking-widest text-sm mb-3">ABOUTS</h2>
                             <nav className="list-none mb-10">
                                 <li>
                                     <a className="text-gray-400 hover:text-white">First Link</a>
