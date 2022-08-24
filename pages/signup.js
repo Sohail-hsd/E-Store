@@ -4,10 +4,10 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 
 const Signup = () => {
-  const [name, setName] = useState()
-  const [email, setEmail] = useState()
-  const [password, setPassword] = useState()
-  const [ConPassword, setConPassword] = useState()
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [ConPassword, setConPassword] = useState('')
   const router = useRouter()
 
   useEffect(() => {
@@ -33,7 +33,7 @@ const Signup = () => {
     } else {
 
       try {
-        let response = await fetch('http://localhost:3000/api/Account/signup', {
+        let response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/Account/signup`, {
           method: 'POST', // or 'PUT'
           headers: {
             'Content-Type': 'application/json',
@@ -56,7 +56,7 @@ const Signup = () => {
           setPassword('')
           setConPassword('')
           setTimeout(() => {
-            router.push('/')
+            router.push('/sigin')
           }, 2000);
         } else {
           toast.error('Please try Again, With a valid email address', {

@@ -29,12 +29,12 @@ const Products = ({ addToCart, product, varients, buyNow }) => {
     // console.log(varients)
     // console.log(newColor,newSize)
     // console.log(varients[newColor][newSize])
-    let url = `http://localhost:3000/products/${varients[newColor][newSize]['slug']}`
+    let url = `${process.env.NEXT_PUBLIC_HOST}/products/${varients[newColor][newSize]['slug']}`
     window.location = url
   }
 
   const checkServiceAbility = async () => {
-    let pins = await fetch('http://localhost:3000/api/pincode')
+    let pins = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pincode`)
     let pinsJson = await pins.json()
     if (pinsJson.includes(parseInt(Pin))) {
       setService(true)

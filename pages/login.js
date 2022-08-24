@@ -11,7 +11,7 @@ const Login = () => {
 
   useEffect(() => {
     if(localStorage.getItem('token')){
-      router.push('/')
+      router.push(`/`)
     }
   }, [])
   
@@ -21,7 +21,7 @@ const Login = () => {
     const loginData = { email, password }
     console.log(remember)
 
-    const response = await fetch('http://localhost:3000/api/Account/login', {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/Account/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

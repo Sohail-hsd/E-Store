@@ -10,14 +10,14 @@ import LoadingBar from 'react-top-loading-bar'
 function MyApp({ Component, pageProps }) {
   const [cart, setcart] = useState({})
   const [SubTotal, setSubTotal] = useState(0)
-  const [Key, setKey] = useState(0)
+  const [key, setKey] = useState()
   const [user, setUser] = useState({ value: null })
   const [progress, setProgress] = useState(0)
   const router = useRouter()
 
-  useEffect(() => {
-    router.events.on('routeChangeStart',() => setProgress(60))
-    router.events.on('routeChangeComplete',() => setProgress(100))
+  useEffect( () => {
+    router.events.on('routeChangeStart', () => setProgress(60))
+    router.events.on('routeChangeComplete', () => setProgress(100))
     try {
       if (localStorage.getItem('cart')) {
         setcart(JSON.parse(localStorage.getItem('cart')))
@@ -27,18 +27,32 @@ function MyApp({ Component, pageProps }) {
       console.error(error)
       localStorage.clear()
     }
+    getUser()
+    setKey(Math.random())
+  }, [router.query])
+
+  const getUser = async () => {
     const token = localStorage.getItem('token')
     if (token) {
-      setUser({ value: token })
-      setKey(Math.random())
+      let response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/Account/getUser`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'authorization': `${token}`
+        },
+  
+      })
+      response = await response.json()
+      setUser({ value: response })
+      console.log(user)
     }
-
-  }, [router.query])
+  }
 
   const logOut = () => {
     localStorage.removeItem('token')
     setUser({ value: null })
     setKey(Math.random())
+    router.push('/')
   }
 
   const saveCart = (myCart) => {
@@ -98,8 +112,8 @@ function MyApp({ Component, pageProps }) {
         waitingTime={400}
         onLoaderFinished={() => setProgress(0)}
       />
-      <Navbar key={Key} user={user} logOut={logOut} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} SubTotal={SubTotal} saveCart={saveCart} cart={cart} />
-      <Component addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} SubTotal={SubTotal} saveCart={saveCart} cart={cart} buyNow={buyNow} {...pageProps} />
+      {key && <Navbar key={key} user={user} logOut={logOut} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} SubTotal={SubTotal} saveCart={saveCart} cart={cart} />}
+      <Component user={user} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} SubTotal={SubTotal} saveCart={saveCart} cart={cart} buyNow={buyNow} {...pageProps} />
       <Footer />
     </>
   )

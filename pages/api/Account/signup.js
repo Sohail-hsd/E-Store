@@ -8,7 +8,7 @@ const handler = async (req, res) => {
             const { name, email, password } = req.body
             let check = await User.findOne({ email })
             if (!check) {
-                const cyperText = CryptoJS.AES.encrypt(password, 'SecretKey1999').toString()
+                const cyperText = CryptoJS.AES.encrypt(password, process.env.PASSWORD_SECRET_KEY).toString()
                 let user = new User({ name, email, password: cyperText })
                 await user.save()
                 res.status(200).json({ status: true, Message: "Account created" })

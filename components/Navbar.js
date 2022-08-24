@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { BsFillCartFill, BsFillBagCheckFill } from 'react-icons/bs'
+import { BsFillCartFill, BsFillBagCheckFill, BsFillBellFill } from 'react-icons/bs'
 import { AiFillCloseCircle, AiFillMinusCircle, AiFillPlusCircle } from 'react-icons/ai'
 import { MdAccountCircle } from 'react-icons/md'
 import { ToastContainer, toast } from 'react-toastify';
@@ -10,6 +10,7 @@ import { ToastContainer, toast } from 'react-toastify';
 const Navbar = ({ cart, addToCart, removeFromCart, clearCart, SubTotal, user, logOut }) => {
   const ref = useRef()
   const [dropDown, setdropDown] = useState(false)
+  const [notification, setNotification] = useState(false)
 
   const logout = () => {
     toast.success('Your are Successfully LogOut!', {
@@ -54,40 +55,80 @@ const Navbar = ({ cart, addToCart, removeFromCart, clearCart, SubTotal, user, lo
       />
       <div className="logo mx-5 ">
         <Link href={"/"}>
-          <a><Image src={'/blackLogo.png'} width={80} height={80} /></a>
+          <a><Image className='transition ease-in-out hover:-translate-y-0.5 hover:scale-110 duration-150' src={'/blackLogo.png'} width={80} height={80} /></a>
         </Link>
       </div>
       <div className="nav">
         <ul className='flex items-center space-x-6 font-bold md:text-md px-10 text-white'>
-          <Link href={'/tshirts'}><a className='hover:text-green-400'><li>T-Shirts</li></a></Link>
-          <Link href={'/hoodies'}><a className='hover:text-green-400'><li>Hoodies</li></a></Link>
-          <Link href={'/stickers'}><a className='hover:text-green-400'><li>Stickers</li></a></Link>
-          <Link href={'/mugs'}><a className='hover:text-green-400'><li>Mugs</li></a></Link>
+          <Link href={'/tshirts'}><a className='transition ease-in-out hover:-translate-y-0.5 hover:scale-110 duration-150 hover:text-green-400'><li>T-Shirts</li></a></Link>
+          <Link href={'/hoodies'}><a className='transition ease-in-out hover:-translate-y-0.5 hover:scale-110 duration-150 hover:text-green-400'><li>Hoodies</li></a></Link>
+          <Link href={'/stickers'}><a className='transition ease-in-out hover:-translate-y-0.5 hover:scale-110 duration-150 hover:text-green-400'><li>Stickers</li></a></Link>
+          <Link href={'/mugs'}><a className='transition ease-in-out hover:-translate-y-0.5 hover:scale-110 duration-150 hover:text-green-400'><li>Mugs</li></a></Link>
         </ul>
       </div>
       <div ref={ref} className="cart space-x-2 items-center flex absolute right-0 top-7 mx-5 text-green-300 cursor-pointer">
 
-        {/* Accounts */}
+        {/* Notification */}
 
-        <a onMouseOver={() => setdropDown(true)} onMouseLeave={() => setdropDown(false)}>
-          {dropDown && <div className="absolute bg-green-200 right-7 top-6 w-36 p-4 py-4 rounded-md  text-black ">
+        <span onClick={() => notification ? setNotification(false) : setNotification(true)}>
+          {notification && <div className="absolute rounded-md shadow-green-200 shadow-sm bg-green-200 right-16 top-6 w-56 p-4 py-4 text-black ">
+            <span onClick={() => setNotification(false)} className='top-4 right-2 absolute text-2xl cursor-pointer text-red-700'> <AiFillCloseCircle /> </span>
             <ul>
-              <Link href={'/account'}><li className=' py-1 text-sm hover:text-green-600 font-bold'>My Account</li></Link>
-              <Link href={'/orders'}><li className=' py-1 text-sm hover:text-green-600 font-bold'>Order</li></Link>
-              <li onClick={logout} className=' py-1 text-sm hover:text-green-600 font-bold'>Logout</li>
+              <li className=' py-1 text-lg hover:text-green-600 font-bold flex flex-row'>
+                Notification
+              </li>
+              <hr className="h-0 my-2 border border-solid border-t-0 border-gray-700 opacity-25" />
+              <li className='transition ease-in-out hover:-translate-y-0.5 hover:scale-110 duration-150 py-1 text-sm hover:text-green-600 font-bold'>Notifcation Box Is Empty</li>
             </ul>
           </div>}
 
+
           {/* Accounts and Cart Icons */}
-          {user.value && <Link href={'/account'}>
-            <a><MdAccountCircle onMouseOver={() => setdropDown(true)} onMouseLeave={() => setdropDown(false)} className='text-xl md:text-2xl hover:text-slate-500' /></a>
-          </Link>}
-        </a>
+          {user.value &&
+            <BsFillBellFill onClick={() => notification ? setNotification(false) : setNotification(true)} className='text-xl md:text-2xl hover:text-green-400 text-white transition ease-in-out hover:-translate-y-0.5 hover:scale-110 duration-150 cursor-pointer' />
+          }
+        </span>
+
+        {/* Accounts */}
+
+        <span onClick={() => dropDown ? setdropDown(false) : setdropDown(true)}>
+          {dropDown && <div className="absolute rounded-md shadow-green-200 shadow-sm bg-green-200 right-7 top-6 w-56 p-4 py-4 text-black ">
+            <span onClick={() => setdropDown(false)} className='top-4 right-2 absolute text-2xl cursor-pointer text-red-700'> <AiFillCloseCircle /> </span>
+            <ul>
+              <Link href={'/account'}>
+                <li className=' py-1 text-sm hover:text-green-600 font-bold flex flex-row'>
+                  <img
+                    src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
+                    className="rounded-full w-10"
+                    alt="Avatar"
+                  />
+                  <div className='pl-2'>
+                    <p className='text-sm text-gray-600'>{user.value.UserName}</p>
+                    <p className='text-sm text-gray-600'>{user.value.Email}</p>
+                  </div>
+                </li>
+              </Link>
+              <hr className="h-0 my-2 border border-solid border-t-0 border-gray-700 opacity-25" />
+              <Link href={'/account'}><li className='transition ease-in-out hover:-translate-y-0.5 hover:scale-110 duration-150 py-1 text-sm hover:text-green-600 font-bold'>My Profile</li></Link>
+              <Link href={'/orders'}><li className='transition ease-in-out hover:-translate-y-0.5 hover:scale-110 duration-150 py-1 text-sm hover:text-green-600 font-bold'>Order</li></Link>
+              <Link href={'/account'}><li className='transition ease-in-out hover:-translate-y-0.5 hover:scale-110 duration-150 py-1 text-sm hover:text-green-600 font-bold'>Setting</li></Link>
+              <li onClick={logout} className='transition ease-in-out hover:-translate-y-0.5 hover:scale-110 duration-150 py-1 text-sm hover:text-green-600 font-bold'>Logout</li>
+            </ul>
+          </div>}
+
+
+          {/* Accounts and Cart Icons */}
+          {user.value &&
+            <MdAccountCircle onClick={() => dropDown ? setdropDown(false) : setdropDown(true)} className='text-xl md:text-2xl hover:text-green-400 text-white cursor-pointer transition ease-in-out hover:-translate-y-0.5 hover:scale-110 duration-150' />
+          }
+        </span>
         {!user.value && <Link href={'/login'}>
           <button className=' cursor-pointer text-xl hover:bg-green-600 hover:text-white rounded-md p-1 text-green-400 font-bold mx-2'>Login</button>
         </Link>}
-        <BsFillCartFill onClick={activeCart} className='text-xl md:text-2xl hover:text-slate-500' />
+        <BsFillCartFill onClick={activeCart} className='text-xl md:text-2xl hover:text-green-400 text-white transition ease-in-out hover:-translate-y-0.5 hover:scale-110 duration-150' />
       </div>
+
+
 
       {/* SideBar (Cart) */}
 
