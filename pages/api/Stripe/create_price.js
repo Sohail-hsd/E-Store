@@ -1,23 +1,22 @@
-const stripe = require('stripe')('sk_test_51LZEPECEyXIeUuGFYP4rckgVXzij2q0xAvLnAE3DbnxhvWBg7eQ5XT8CZMtVdABoF4K9ofPBdqYwSNJJYNsCRxhE00VmvrP27c');
+const stripe = require('stripe')(process.env.NEXT_PUBLIC_STRIPE_SECRETE_KEY);
 
 export default function handler(req, res) {
+    const { amount, email, token } = req.body;
 
-    return stripe.products.create({
-        name: 'Starter Subscription',
-        description: '$12/Month subscription',
-    }).then(product => {
-        stripe.prices.create({
-            unit_amount: 1200,
-            currency: 'usd',
-            recurring: {
-                interval: 'month',
-            },
-            product: product.id,
-        }).then(price => {
-            res.status(200).json({
-                product_id: 'Success! Here is your starter subscription product id: ' + product.id,
-                price_id: 'Success! Here is your premium subscription price id: ' + price.id
-            })
-        });
-    });
+    stripe.customers
+        .create({
+            email: email,
+            source: token.id,
+            name: token.card.name,
+        })
+        .then((customer) => {
+            return stripe.charges.create({
+                amount: parseFloat(amount) * 100,
+                description: `Payment for USD ${amount}`,
+                currency: "USD",
+                customer: customer.id,
+            });
+        })
+        .then((charge) => res.status(200).send(charge))
+        .catch((err) => console.log(err))
 }

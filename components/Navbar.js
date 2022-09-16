@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState,useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { BsFillCartFill, BsFillBagCheckFill, BsFillBellFill } from 'react-icons/bs'
@@ -6,11 +6,17 @@ import { AiFillCloseCircle, AiFillMinusCircle, AiFillPlusCircle } from 'react-ic
 import { MdAccountCircle } from 'react-icons/md'
 import { ToastContainer, toast } from 'react-toastify';
 
-
-const Navbar = ({ cart, addToCart, removeFromCart, clearCart, SubTotal, user, logOut }) => {
+const Navbar = ({ cart, addToCart, removeFromCart, clearCart, SubTotal, user, logOut, calculateSubtotal }) => {
   const ref = useRef()
   const [dropDown, setdropDown] = useState(false)
   const [notification, setNotification] = useState(false)
+  useEffect(() => {
+    if (!SubTotal) {
+      calculateSubtotal()
+    }
+    console.log(user)
+  }, [])
+
 
   const logout = () => {
     toast.success('Your are Successfully LogOut!', {

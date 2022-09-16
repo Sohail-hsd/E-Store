@@ -44,7 +44,7 @@ function MyApp({ Component, pageProps }) {
       })
       response = await response.json()
       setUser({ value: response })
-      console.log(user)
+      // console.log(user)
     }
   }
 
@@ -60,6 +60,17 @@ function MyApp({ Component, pageProps }) {
     let subt = 0;
     let key = Object.keys(myCart)
     // console.log(myCart[key[0]].qty)
+
+    for (let i = 0; i < key.length; i++) {
+      subt = myCart[key[i]].price * myCart[key[i]].qty;
+    }
+    setSubTotal(subt)
+  }
+
+  const calculateSubtotal = () => {
+    let myCart = cart
+    let subt = 0;
+    let key = Object.keys(myCart)
 
     for (let i = 0; i < key.length; i++) {
       subt = myCart[key[i]].price * myCart[key[i]].qty;
@@ -98,7 +109,8 @@ function MyApp({ Component, pageProps }) {
   }
 
   const buyNow = (itemCode, name, price, size, varient, qty) => {
-    let newCart = { itemCode: { qty: 1, price, name, size, varient } }
+    let newCart = {}
+    newCart[itemCode] = { qty: 1, price, name, size, varient }
     setcart(newCart)
     saveCart(newCart)
     router.push('/checkout')
@@ -112,8 +124,8 @@ function MyApp({ Component, pageProps }) {
         waitingTime={400}
         onLoaderFinished={() => setProgress(0)}
       />
-      {key && <Navbar key={key} user={user} logOut={logOut} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} SubTotal={SubTotal} saveCart={saveCart} cart={cart} />}
-      <Component user={user} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} SubTotal={SubTotal} saveCart={saveCart} cart={cart} buyNow={buyNow} {...pageProps} />
+      {key && <Navbar calculateSubtotal={calculateSubtotal} key={key} user={user} logOut={logOut} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} SubTotal={SubTotal} saveCart={saveCart} cart={cart} />}
+      <Component calculateSubtotal={calculateSubtotal} user={user} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} SubTotal={SubTotal} saveCart={saveCart} cart={cart} buyNow={buyNow} {...pageProps} />
       <Footer />
     </>
   )
