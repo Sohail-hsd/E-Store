@@ -1,10 +1,23 @@
-import React from 'react'
-import { useRouter } from 'next/router'
+import React, { useState } from 'react'
 import Order from '../models/Order'
 import mongoose from 'mongoose'
 
 const MyOrder = ({ order }) => {
-    const products = order.products
+  const [tootip, settootip] = useState(false)
+  const [Text, setText] = useState('COPY')
+  const products = order.products
+  const textChange = () => {
+    setText('COPIED')
+
+    setTimeout(() => {
+      setText('COPY')
+    }, 3000);
+  }
+  const copyOrderID = (event) => {
+    let copyText = event.target.innerHTML
+    console.log(copyText)
+    navigator.clipboard.writeText(copyText)
+  }
 
   return (
     <section className="text-gray-400 bg-gray-900 body-font overflow-hidden">
@@ -12,10 +25,28 @@ const MyOrder = ({ order }) => {
         <div className="lg:w-5/4 mx-auto flex flex-wrap">
           <div className="lg:w-1/2 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
             <h2 className="text-sm title-font text-gray-500 tracking-widest">HSD Store</h2>
-            <h1 className="text-white text-3xl title-font font-medium mb-4">Order id : {order.orderID}</h1>
+            <span >
+              {tootip &&
+                <div className="absolute rounded-md shadow-green-200 shadow-sm bg-gray-600 left-64 top-36 w-20 
+                p-2 text-black ">
+                  <h1 className=' text-center text-sm font-bold leading-tight  text-white'>
+                    {Text}
+                  </h1>
+
+                </div>}
+
+
+              {/* Accounts and Cart Icons */}
+              {order.orderID &&
+                <h1 onClick={textChange} className="text-white text-3xl title-font font-bold mb-4">Order id :
+                  <span onMouseLeave={() => tootip ? settootip(false) : ''} onMouseOver={() => tootip ? '' : settootip(true)} onClick={copyOrderID}>{order.orderID}</span>
+                </h1>
+                
+              }
+            </span>
 
             <p className="leading-relaxed ">Your order has been successfully placed.</p>
-            <p className="leading-relaxed mb-4">Your payment status is : <span className={`font-bold leading-tight ${order.status === 'Pending'?'text-yellow-500': 'text-green-600'}`}>{order.status}</span>  </p>
+            <p className="leading-relaxed mb-4">Your payment status is : <span className={`font-bold leading-tight ${order.status === 'Pending' ? 'text-yellow-500' : 'text-green-600'}`}>{order.status}</span>  </p>
 
             {/* Order Table */}
 
@@ -54,7 +85,7 @@ const MyOrder = ({ order }) => {
                         $ {parseFloat(products[item].price).toFixed(2)}
                       </td>
                     </tr>))}
-                    
+
                   <tr className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
                     <th scope="row" className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                       <span className="title-font font-medium text-2xl text-white"> Total Price </span>

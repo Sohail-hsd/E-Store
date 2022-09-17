@@ -47,7 +47,7 @@ const Navbar = ({ cart, addToCart, removeFromCart, clearCart, SubTotal, user, lo
   }
 
   return (
-    <div className='z-10 flex flex-col items-center justify-center md:flex-row md:justify-start bg-gray-900 shadow-md shadow-green-400 overflow-visible sticky top-0'>
+    <div className='z-30 flex flex-col items-center justify-center md:flex-row md:justify-start bg-gray-900 shadow-md shadow-green-400 overflow-visible sticky top-0'>
       <ToastContainer
         position="top-center"
         autoClose={2000}

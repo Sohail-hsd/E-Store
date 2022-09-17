@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import Link from 'next/link'
 import { AiFillMinusCircle, AiFillPlusCircle } from 'react-icons/ai'
 import { useRouter } from 'next/router'
-import { loadStripe } from '@stripe/stripe-js'
+// import Link from 'next/link'
+// import { loadStripe } from '@stripe/stripe-js'
 
-const Checkout = ({ cart, removeFromCart, addToCart, calculateSubtotal, SubTotal, clearCart }) => {
+const Checkout = ({ cart, removeFromCart, addToCart, calculateSubtotal, SubTotal, clearCart, user }) => {
   const [Name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
@@ -12,20 +12,41 @@ const Checkout = ({ cart, removeFromCart, addToCart, calculateSubtotal, SubTotal
   const [state, setState] = useState('')
   const [pin, setPin] = useState('')
   const [address, setAddress] = useState('')
-  // const [Total, setTotal] = useState(0)
-  const router = useRouter()
+  const [errMsg, seterrMsg] = useState('')
 
+  const router = useRouter()
 
   useEffect(() => {
     if (localStorage.getItem('cart') == '{}') {
       router.push('/')
+    } else {
+      calculateSubtotal()
+      setEmail(user.value.Email)
+      setName(user.value.UserName)
     }
-    calculateSubtotal()
   }, [])
+
+  const handelPinCode = async (event) => {
+    setPin(event.target.value)
+    if (event.target.value.length == 5) {
+      let pins = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pincode`)
+      let pinsJson = await pins.json()
+      if (Object.keys(pinsJson).includes(event.target.value)) {
+        setCity(pinsJson[event.target.value][0])
+        setState(pinsJson[event.target.value][1])
+      } else {
+        setCity('')
+        setState('')
+      }
+    } else {
+      setCity('')
+      setState('')
+    }
+  }
 
   const checkout_order = async (event) => {
     event.preventDefault()
-    if(!SubTotal){
+    if (!SubTotal) {
       calculateSubtotal()
     }
     let orderID = Math.floor(Math.random() * Date.now())
@@ -38,7 +59,14 @@ const Checkout = ({ cart, removeFromCart, addToCart, calculateSubtotal, SubTotal
       body: JSON.stringify(data),
     })
     response = await response.json()
-    if(response.status === "Paid" || response.status === 'Pending' ){
+    if (response.success === false && response.error) {
+      seterrMsg(response.error)
+      setTimeout(() => {
+        clearCart()
+        router.push('/')
+      }, 5000);
+    }
+    if (response.status === "Paid" || response.status === 'Pending') {
       console.log(response)
       clearCart()
       router.push(`/order/?id=${response.orderid}`)
@@ -47,9 +75,15 @@ const Checkout = ({ cart, removeFromCart, addToCart, calculateSubtotal, SubTotal
 
   return (
     <div>
-      <section className="flex text-gray-400 font-semibold bg-gray-900 body-font">
+      <section className="min-h-screen flex text-gray-400 font-semibold bg-gray-900 body-font">
         <div className="container px-5 mx-auto flex sm:flex-nowrap flex-wrap">
           <div className="lg:w-1/2 md:w-1/2 flex flex-col w-full md:py-8 mt-8 md:mt-0">
+
+            <div className="absolute text-sm text-center px-96 font-bold title-font bg-gradient-to-r bg-clip-text  text-transparent 
+            from-red-400 via-red-600 to-red-700
+            animate-text title-font'" >
+              {errMsg ? errMsg : ''}
+            </div>
 
             <h2 className="text-white text-3xl mb-5 font-bold title-font">Checkout</h2>
             <h2 className="text-white text-lg mb-1 font-medium title-font">1. Delivery Detials</h2>
@@ -60,10 +94,10 @@ const Checkout = ({ cart, removeFromCart, addToCart, calculateSubtotal, SubTotal
 
               <div className="relative mb-4 flex space-x-4 items-center">
                 <label htmlFor="name" className="leading-7 text-sm text-gray-400 font-semibold">Name</label>
-                <input value={Name} onChange={(event) => setName(event.target.value)} type="text" id="name" placeholder='Name' name="name" className="w-1/2 bg-gray-800 rounded border border-gray-700 focus:border-green-500 focus:ring-2 focus:ring-green-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                <input value={Name} disabled onChange={(event) => setName(event.target.value)} type="text" id="name" placeholder='Name' name="name" className="w-1/2 bg-gray-800 rounded border border-gray-700 focus:border-green-500 focus:ring-2 focus:ring-green-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
 
                 <label htmlFor="email" className="leading-7 text-sm text-gray-400 font-semibold">email</label>
-                <input value={email} onChange={(event) => setEmail(event.target.value)} type="email" placeholder='email@gmail.com' id="email" name="email" className="w-1/2 bg-gray-800 rounded border border-gray-700 focus:border-green-500 focus:ring-2 focus:ring-green-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                <input value={email} disabled onChange={(event) => setEmail(event.target.value)} type="email" placeholder='email@gmail.com' id="email" name="email" className="w-1/2 bg-gray-800 rounded border border-gray-700 focus:border-green-500 focus:ring-2 focus:ring-green-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
 
               </div>
 
@@ -74,7 +108,7 @@ const Checkout = ({ cart, removeFromCart, addToCart, calculateSubtotal, SubTotal
                 <input value={phone} onChange={(event) => setPhone(event.target.value)} type="tel" id="phone" placeholder='032229999000' phone="phone" className="w-1/2 bg-gray-800 rounded border border-gray-700 focus:border-green-500 focus:ring-2 focus:ring-green-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
 
                 <label htmlFor="pincode" className="leading-7 text-sm text-gray-400 font-semibold">pin</label>
-                <input value={pin} onChange={(event) => setPin(event.target.value)} type="tel" placeholder='pin Code' id="pincode" name="pincode" className="w-1/2 bg-gray-800 rounded border border-gray-700 focus:border-green-500 focus:ring-2 focus:ring-green-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                <input value={pin} onChange={handelPinCode} type="tel" placeholder='pin Code' id="pincode" name="pincode" className="w-1/2 bg-gray-800 rounded border border-gray-700 focus:border-green-500 focus:ring-2 focus:ring-green-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
 
 
               </div>
@@ -84,10 +118,14 @@ const Checkout = ({ cart, removeFromCart, addToCart, calculateSubtotal, SubTotal
 
               <div className="relative mb-4 flex space-x-4 items-center">
                 <label htmlFor="state" className="leading-7 text-sm text-gray-400 font-semibold">state</label>
-                <input value={state} onChange={(event) => setState(event.target.value)} type="text" id="state" placeholder='state (Albany)' state="state" className="w-1/2 bg-gray-800 rounded border border-gray-700 focus:border-green-500 focus:ring-2 focus:ring-green-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" readOnly={false} />
+                <input value={state} disabled
+                  // onChange={(event) => setState(event.target.value)}
+                  type="text" id="state" placeholder='state (Albany)' state="state" className="w-1/2 bg-gray-800 rounded border border-gray-700 focus:border-green-500 focus:ring-2 focus:ring-green-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" readOnly={false} />
 
                 <label htmlFor="city" className="leading-7 text-sm text-gray-400 font-semibold">city</label>
-                <input value={city} onChange={(event) => setCity(event.target.value)} type="text" id="city" placeholder='city (New Yark)' name="city" className="w-1/2 bg-gray-800 rounded border border-gray-700 focus:border-green-500 focus:ring-2 focus:ring-green-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" readOnly={false} />
+                <input value={city} disabled
+                  // onChange={(event) => setCity(event.target.value)}
+                  type="text" id="city" placeholder='city (New Yark)' name="city" className="w-1/2 bg-gray-800 rounded border border-gray-700 focus:border-green-500 focus:ring-2 focus:ring-green-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" readOnly={false} />
 
               </div>
               <div className="relative mb-4">
@@ -153,7 +191,7 @@ const Checkout = ({ cart, removeFromCart, addToCart, calculateSubtotal, SubTotal
             <div className='overflow-visible sticky top-0'>
               <hr className="h-0 my-2 border border-solid border-t-0 border-gray-700 opacity-25" />
               {SubTotal != 0 && <div className="sub-SubTotal">
-                <h3 className='font-semibold'>Total Price : <span className='font-bold'>{SubTotal} </span>$</h3>
+                <h3 className='font-semibold'>Total Price : <span className='font-bold text-white'>{SubTotal} $</span></h3>
               </div>}
             </div>
 

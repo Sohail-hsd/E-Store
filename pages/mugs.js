@@ -6,7 +6,7 @@ import mongoose from 'mongoose'
 const Mugs = ({ products }) => {
   return (
     <div>
-      <section className="text-gray-400 bg-gray-900 body-font">
+      <section className="min-h-screen text-gray-400 bg-gray-900 body-font">
         <div className="container px-5 py-24 mx-auto">
           <div className="flex flex-wrap -m-4">
             {Object.keys(products).map((item) => (

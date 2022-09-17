@@ -41,11 +41,24 @@ export default function Home() {
         >
           <span
             id="blackOverlay"
-            className="w-full h-full absolute opacity-50 bg-black hover:opacity-30 transition ease-linear delay-300"
+            className=" z-10 w-full h-full absolute opacity-50 bg-black hover:opacity-30 transition ease-linear delay-300"
           ></span>
+          <div className='flex text-center'>
+            <div className='z-10 py-28 text-5xl font-bold 
+            bg-gradient-to-r bg-clip-text  text-transparent 
+            from-green-300 via-green-400 to-gray-500
+            animate-text' >
+              The Best Products For Programmers
+            </div>
+            {/* <h1 className='z-10 py-28 text-5xl font-bold leading-tight text-white' >
+              The Best Products For Programmers.
+            </h1> */}
+
+            {/* <img className='z-20' src="hero.png" alt="hero" /> */}
+          </div>
         </div>
         <div
-          className="top-auto bottom-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden"
+          className=" z-10 top-auto bottom-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden"
           style={{ height: "70px" }}
         >
           <svg
