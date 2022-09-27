@@ -15,7 +15,6 @@ const MyOrder = ({ order }) => {
   }
   const copyOrderID = (event) => {
     let copyText = event.target.innerHTML
-    console.log(copyText)
     navigator.clipboard.writeText(copyText)
   }
 
@@ -71,7 +70,7 @@ const MyOrder = ({ order }) => {
                 </thead>
                 <tbody>
                   {Object.keys(products).map(item => (
-                    <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                    <tr key={products[item]} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                       <th scope="row" className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         {products[item].name} ( {products[item].size}  )
                       </th>

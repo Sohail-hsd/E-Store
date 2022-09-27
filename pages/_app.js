@@ -27,7 +27,9 @@ function MyApp({ Component, pageProps }) {
       console.error(error)
       localStorage.clear()
     }
-    getUser()
+    if(!user.value){
+      getUser()
+    }
     setKey(Math.random())
   }, [router.query])
 
@@ -43,6 +45,9 @@ function MyApp({ Component, pageProps }) {
   
       })
       response = await response.json()
+      if(response.status == false && response.Error.name === 'TokenExpiredError'){
+        logOut()
+      }
       setUser({ value: response })
       // console.log(user)
     }
@@ -125,9 +130,9 @@ function MyApp({ Component, pageProps }) {
         onLoaderFinished={() => setProgress(0)}
       />
       {key && <Navbar calculateSubtotal={calculateSubtotal} key={key} user={user} logOut={logOut} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} SubTotal={SubTotal} saveCart={saveCart} cart={cart} />}
-      <Component calculateSubtotal={calculateSubtotal} user={user} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} SubTotal={SubTotal} saveCart={saveCart} cart={cart} buyNow={buyNow} {...pageProps} />
+      <Component getUser={getUser} calculateSubtotal={calculateSubtotal} user={user} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} SubTotal={SubTotal} saveCart={saveCart} cart={cart} buyNow={buyNow} {...pageProps} />
       <Footer />
-    </>
+    </> 
   )
 }
 

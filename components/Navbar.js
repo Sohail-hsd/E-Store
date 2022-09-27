@@ -14,7 +14,6 @@ const Navbar = ({ cart, addToCart, removeFromCart, clearCart, SubTotal, user, lo
     if (!SubTotal) {
       calculateSubtotal()
     }
-    console.log(user)
   }, [])
 
 
@@ -116,7 +115,7 @@ const Navbar = ({ cart, addToCart, removeFromCart, clearCart, SubTotal, user, lo
               </Link>
               <hr className="h-0 my-2 border border-solid border-t-0 border-gray-700 opacity-25" />
               <Link href={'/account'}><li className='transition ease-in-out hover:-translate-y-0.5 hover:scale-110 duration-150 py-1 text-sm hover:text-green-600 font-bold'>My Profile</li></Link>
-              <Link href={'/orders'}><li className='transition ease-in-out hover:-translate-y-0.5 hover:scale-110 duration-150 py-1 text-sm hover:text-green-600 font-bold'>Order</li></Link>
+              <Link href={'/orders'}><li className='transition ease-in-out hover:-translate-y-0.5 hover:scale-110 duration-150 py-1 text-sm hover:text-green-600 font-bold'>All Orders</li></Link>
               <Link href={'/account'}><li className='transition ease-in-out hover:-translate-y-0.5 hover:scale-110 duration-150 py-1 text-sm hover:text-green-600 font-bold'>Setting</li></Link>
               <li onClick={logout} className='transition ease-in-out hover:-translate-y-0.5 hover:scale-110 duration-150 py-1 text-sm hover:text-green-600 font-bold'>Logout</li>
             </ul>

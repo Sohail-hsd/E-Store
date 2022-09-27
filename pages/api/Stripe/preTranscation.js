@@ -10,23 +10,30 @@ const handler = async (req, res) => {
         for (let item in cart) {
             sumTotal = cart[item].price * cart[item].qty
             product = await Product.findOne({ slug: item })
-            if(product.price !== cart[item].price){
-                return res.status(403).json({success:false, error:"The price of some products in  your cart is changed. Please try again"})
+
+            // Chack if the cart item is out of stock --- [Done]
+            if (product.availableQty < cart[item].qty) {
+                return res.status(403).json({ success: false, error: "Some items in your cart is out of stack, Please try again." })
+            }
+
+            if (product.price !== cart[item].price) {
+                return res.status(403).json({ success: false, error: "The price of some products in  your cart is changed. Please try again" })
             }
         }
-        if(sumTotal !==  req.body.SubTotal){
-            return res.status(403).json({success:false, error:"The price of some products in  your cart is changed. Please try again"})
+        if (sumTotal !== req.body.SubTotal) {
+            return res.status(403).json({ success: false, error: "The price of some products in  your cart is changed. Please try again" })
         }
 
-        // Chack if the cart item is out of stock --- [pending]
         // Chack if the detials are valid --- [pending]
-        // Initiate an Order, Coressponding ot this OrderId.
+
+        // Initiate an Order, Coressponding ot this OrderId. --- [Done]
         try {
             // console.log(req.body)
             let order = new Order({
                 email: req.body.email,
+                name: req.body.name,
                 orderID: req.body.orderID,
-                address: req.body.address,
+                address: req.body.city + " , " + req.body.address ,
                 amount: req.body.SubTotal,
                 products: req.body.cart,
                 status: 'Initiate'
@@ -38,7 +45,7 @@ const handler = async (req, res) => {
 
         } catch (error) {
 
-            return res.status(401).json({ Error: error })
+            return res.status(401).json({ success: false, error: error.message })
         }
     }
 

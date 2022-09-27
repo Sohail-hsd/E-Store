@@ -6,21 +6,27 @@ const handler = async (req, res) => {
     try {
         if (req.method == 'POST') {
             let token = req.headers.authorization
-            let decoded = jwt.verify(token,`${process.env.JWT_SECRET_KEY}`)
-            let user = await User.findOne({id:decoded.id})
-            let data = {
-                UserName: user.name,
-                Email:user.email
-            }
-            return res.status(200).json(data)
-                        
+            // Verifing Authorization token --- [Done]
+            jwt.verify(token, `${process.env.JWT_SECRET_KEY}`, async (err, decoded) => {
+                if (err) {
+                    return res.status(400).json({ status: false, Error: err })
+                }
+                
+                let user = await User.findOne({ id: decoded.id })
+                let data = {
+                    UserName: user.name,
+                    Email: user.email
+                }
+                return res.status(200).json(data)
+            });    
+
         } else {
 
-            return res.status(400).json({ status: false, Errror: 'This method is not allowed' })
+            return res.status(400).json({ status: false, Error: 'This method is not allowed' })
         }
     } catch (error) {
         console.error({ error: error })
-        res.status(400).json({ status: false, Errror: 'Internal Srever Error' })
+        res.status(400).json({ status: false, Error: 'Internal Srever Error' })
     }
 
 }

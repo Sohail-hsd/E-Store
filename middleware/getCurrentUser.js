@@ -13,7 +13,7 @@ const handler = async (req, res) => {
 
     } catch (error) {
         console.error({ error: error })
-        res.status(400).json({ status: false, Errror: 'Internal Srever Error' })
+        return res.status(400).json({ status: false, Errror: 'Internal Srever Error' })
     }
 
 }

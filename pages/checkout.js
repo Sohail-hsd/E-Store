@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { AiFillMinusCircle, AiFillPlusCircle } from 'react-icons/ai'
 import { useRouter } from 'next/router'
+import { ToastContainer, toast } from 'react-toastify';
 // import Link from 'next/link'
 // import { loadStripe } from '@stripe/stripe-js'
 
-const Checkout = ({ cart, removeFromCart, addToCart, calculateSubtotal, SubTotal, clearCart, user }) => {
-  const [Name, setName] = useState('')
+const Checkout = ({ cart, removeFromCart, addToCart, calculateSubtotal, SubTotal, clearCart, user, getUser }) => {
+  const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
   const [city, setCity] = useState('')
@@ -21,8 +22,10 @@ const Checkout = ({ cart, removeFromCart, addToCart, calculateSubtotal, SubTotal
       router.push('/')
     } else {
       calculateSubtotal()
-      setEmail(user.value.Email)
-      setName(user.value.UserName)
+      if(!name || !email ){
+        setEmail(user.value.Email)
+        setName(user.value.UserName)
+      }
     }
   }, [])
 
@@ -50,7 +53,7 @@ const Checkout = ({ cart, removeFromCart, addToCart, calculateSubtotal, SubTotal
       calculateSubtotal()
     }
     let orderID = Math.floor(Math.random() * Date.now())
-    const data = { email, phone, city, state, pin, address, cart, SubTotal, orderID }
+    const data = { email, name ,phone, city, state, pin, address, cart, SubTotal, orderID }
     let response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/Stripe/preTranscation`, {
       method: 'POST', // or 'PUT'
       headers: {
@@ -59,15 +62,32 @@ const Checkout = ({ cart, removeFromCart, addToCart, calculateSubtotal, SubTotal
       body: JSON.stringify(data),
     })
     response = await response.json()
+    console.log(response)
     if (response.success === false && response.error) {
-      seterrMsg(response.error)
+      toast.error("Please, fill the form correctly. Thank you!", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       setTimeout(() => {
         clearCart()
         router.push('/')
-      }, 5000);
+      }, 3000);
     }
     if (response.status === "Paid" || response.status === 'Pending') {
-      console.log(response)
+      toast.success("Order Placed. Thank you!", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       clearCart()
       router.push(`/order/?id=${response.orderid}`)
     }
@@ -75,6 +95,17 @@ const Checkout = ({ cart, removeFromCart, addToCart, calculateSubtotal, SubTotal
 
   return (
     <div>
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <section className="min-h-screen flex text-gray-400 font-semibold bg-gray-900 body-font">
         <div className="container px-5 mx-auto flex sm:flex-nowrap flex-wrap">
           <div className="lg:w-1/2 md:w-1/2 flex flex-col w-full md:py-8 mt-8 md:mt-0">
@@ -94,7 +125,7 @@ const Checkout = ({ cart, removeFromCart, addToCart, calculateSubtotal, SubTotal
 
               <div className="relative mb-4 flex space-x-4 items-center">
                 <label htmlFor="name" className="leading-7 text-sm text-gray-400 font-semibold">Name</label>
-                <input value={Name} disabled onChange={(event) => setName(event.target.value)} type="text" id="name" placeholder='Name' name="name" className="w-1/2 bg-gray-800 rounded border border-gray-700 focus:border-green-500 focus:ring-2 focus:ring-green-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                <input value={name} disabled onChange={(event) => setName(event.target.value)} type="text" id="name" placeholder='Name' name="name" className="w-1/2 bg-gray-800 rounded border border-gray-700 focus:border-green-500 focus:ring-2 focus:ring-green-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
 
                 <label htmlFor="email" className="leading-7 text-sm text-gray-400 font-semibold">email</label>
                 <input value={email} disabled onChange={(event) => setEmail(event.target.value)} type="email" placeholder='email@gmail.com' id="email" name="email" className="w-1/2 bg-gray-800 rounded border border-gray-700 focus:border-green-500 focus:ring-2 focus:ring-green-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
@@ -136,7 +167,7 @@ const Checkout = ({ cart, removeFromCart, addToCart, calculateSubtotal, SubTotal
                 className="item-center text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded text-lg disabled:bg-green-300"
                 type='submitt'
                 onClick={checkout_order}
-                disabled={Name && email && phone && city && pin && address && cart !== "{}" ? false : true}
+                disabled={name && email && phone && city && pin && address && cart !== "{}" ? false : true}
               >
                 Pay,  ${SubTotal}  </button>
             </form>
