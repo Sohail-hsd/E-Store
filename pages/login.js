@@ -3,14 +3,14 @@ import Link from 'next/link'
 import { ToastContainer, toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 
-const Login = () => {
+const Login = (user) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [remember, setRemember] = useState(false)
   const router = useRouter()
 
   useEffect(() => {
-    if(localStorage.getItem('token')){
+    if(localStorage.getItem('token') && user.value != null ){
       router.push(`/`)
     }
   }, [])

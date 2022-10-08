@@ -2,9 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-    overflow-x: hidden;
-}
 
 .img-filter {
     filter: grayscale(0.3) contrast(1.2) opacity(0.6);

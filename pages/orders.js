@@ -87,7 +87,10 @@ const Orders = () => {
               Amount
             </th>
             <th scope="col" className="py-3 px-6">
-              Status
+              Payment Status
+            </th>
+            <th scope="col" className="py-3 px-6">
+              Delivery Status
             </th>
             <th scope="col" className="py-3 px-6">
               Action
@@ -120,7 +123,10 @@ const Orders = () => {
                 ${item.amount}
               </td>
               <td className={`py-4 px-6 ${item.status === 'Pending' ? 'text-yellow-400' : 'text-green-400'}`}>
-                {item.status}
+              <span className='hover:bg-slate-900 p-1 rounded-lg'>{item.status}</span>
+              </td>
+              <td className={`py-4 px-6 ${item.deliveryStatus === 'unshipped' ? 'text-yellow-400' : 'text-green-400'}`}>
+                <span className='hover:bg-slate-900 p-1 rounded-lg'>{item.deliveryStatus}</span>
               </td>
               <td className="py-4 px-6">
                 <Link href={`/order/?id=${item._id}`} ><a className="font-medium text-blue-600 dark:text-blue-500 hover:underline">View Order</a></Link>

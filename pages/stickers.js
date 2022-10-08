@@ -78,6 +78,10 @@ export async function getServerSideProps(context) {
         Stickers[item.title].color = [item.color]
         Stickers[item.title].size = [item.size]
       }
+      else {
+        Stickers[item.title].color = []
+        Stickers[item.title].size = []
+      }
 
     }
   }

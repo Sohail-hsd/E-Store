@@ -1,11 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Order from '../models/Order'
 import mongoose from 'mongoose'
 
 const MyOrder = ({ order }) => {
   const [tootip, settootip] = useState(false)
   const [Text, setText] = useState('COPY')
+  const [date, setDate] = useState('')
   const products = order.products
+
+  useEffect(() => {
+    const d = new Date(order.createdAt)
+    setDate(d)
+  }, [])
+
+
   const textChange = () => {
     setText('COPIED')
 
@@ -40,12 +48,27 @@ const MyOrder = ({ order }) => {
                 <h1 onClick={textChange} className="text-white text-3xl title-font font-bold mb-4">Order id :
                   <span onMouseLeave={() => tootip ? settootip(false) : ''} onMouseOver={() => tootip ? '' : settootip(true)} onClick={copyOrderID}>{order.orderID}</span>
                 </h1>
-                
+
               }
             </span>
 
             <p className="leading-relaxed ">Your order has been successfully placed.</p>
-            <p className="leading-relaxed mb-4">Your payment status is : <span className={`font-bold leading-tight ${order.status === 'Pending' ? 'text-yellow-500' : 'text-green-600'}`}>{order.status}</span>  </p>
+            <p className="leading-relaxed ">
+              Order placed on : <span className='font-bold'>
+                {date && date.toLocaleDateString("en-PK", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}
+              </span>
+            </p>
+            <p className="leading-relaxed">
+              Your payment status is :
+              <span className={`font-bold leading-tight ${order.status === 'Pending' ? 'text-yellow-500' : 'text-green-600'}`}>{" " + order.status}</span>
+            </p>
+
+            <p className="leading-relaxed mb-4">
+              Deldelivery Status : 
+              <span className={`font-bold leading-tight ${order.deliveryStatus === 'unshipped' ? 'text-yellow-500' : 'text-green-600'}`}>
+                 {" " + order.deliveryStatus}
+              </span>
+            </p>
 
             {/* Order Table */}
 

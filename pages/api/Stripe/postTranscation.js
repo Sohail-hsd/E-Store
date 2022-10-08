@@ -20,7 +20,7 @@ const handler = async (req, res) => {
             return res.status(200).json({ orderid: order._id, status: 'Pending' })
         } catch (error) {
 
-            return res.status(200).json(error)
+            return res.status(401).json({ success: false, error: error.message })
         }
 
         // return res.status(200).json("Post Transaction")

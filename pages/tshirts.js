@@ -59,6 +59,7 @@ export async function getServerSideProps(context) {
 
   }
   let products = await Product.find({ category: 'T-shirt' })
+  // let products = await Product.find({'availableQty': {$ne : 0}, category:"T-shirt"})
   let tshirts = {}
   // Loop though all products {T-shirt},
   // if item in tshirt object, update its color and size array. 
@@ -77,6 +78,10 @@ export async function getServerSideProps(context) {
       if (item.availableQty > 0) {
         tshirts[item.title].color = [item.color]
         tshirts[item.title].size = [item.size]
+      }
+      else {
+        tshirts[item.title].color = []
+        tshirts[item.title].size = []
       }
 
     }

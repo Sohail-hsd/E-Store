@@ -10,7 +10,7 @@ const handler = async (req, res) => {
         for (let item in cart) {
             sumTotal = cart[item].price * cart[item].qty
             product = await Product.findOne({ slug: item })
-
+            
             // Chack if the cart item is out of stock --- [Done]
             if (product.availableQty < cart[item].qty) {
                 return res.status(403).json({ success: false, error: "Some items in your cart is out of stack, Please try again." })
@@ -23,7 +23,16 @@ const handler = async (req, res) => {
         if (sumTotal !== req.body.SubTotal) {
             return res.status(403).json({ success: false, error: "The price of some products in  your cart is changed. Please try again" })
         }
-
+        if(req.body.SubTotal <= 0 ) {
+            return res.status(403).json({ success: false, error: "Please, Build your cart and try again." })
+        }
+        if(req.body.phone.length < 11 || !Number.isInteger(Number(req.body.phone))) {
+            return res.status(403).json({ success: false, error: "Please, Enter a valid phone number of 11 digits." })
+        }
+        if(req.body.pin.length > 5 || !Number.isInteger(Number(req.body.pin)) ) {
+            return res.status(403).json({ success: false, error: "Please, Provide a valid pin code." })
+        }
+        
         // Chack if the detials are valid --- [pending]
 
         // Initiate an Order, Coressponding ot this OrderId. --- [Done]
@@ -32,8 +41,9 @@ const handler = async (req, res) => {
             let order = new Order({
                 email: req.body.email,
                 name: req.body.name,
+                phone: req.body.phone,
                 orderID: req.body.orderID,
-                address: req.body.city + " , " + req.body.address ,
+                address: req.body.district + " , " + req.body.address ,
                 amount: req.body.SubTotal,
                 products: req.body.cart,
                 status: 'Initiate'

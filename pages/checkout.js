@@ -9,7 +9,7 @@ const Checkout = ({ cart, removeFromCart, addToCart, calculateSubtotal, SubTotal
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
-  const [city, setCity] = useState('')
+  const [district, setCity] = useState('')
   const [state, setState] = useState('')
   const [pin, setPin] = useState('')
   const [address, setAddress] = useState('')
@@ -22,15 +22,27 @@ const Checkout = ({ cart, removeFromCart, addToCart, calculateSubtotal, SubTotal
       router.push('/')
     } else {
       calculateSubtotal()
-      if(!name || !email ){
+      if (!name || !email) {
         setEmail(user.value.Email)
         setName(user.value.UserName)
       }
     }
   }, [])
 
+  const showTost = (message) => {
+    toast.error(message, {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  }
+
   const handelPinCode = async (event) => {
-    setPin(event.target.value)
+    /^[0-9]*$/.test(event.target.value) ? setPin(event.target.value) : ''
     if (event.target.value.length == 5) {
       let pins = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pincode`)
       let pinsJson = await pins.json()
@@ -46,52 +58,68 @@ const Checkout = ({ cart, removeFromCart, addToCart, calculateSubtotal, SubTotal
       setState('')
     }
   }
-
+  const isNumber = (str) => {
+    var pattern = /^\d+\.?\d*$/;
+    return pattern.test(str);  // returns a boolean
+  }
   const checkout_order = async (event) => {
     event.preventDefault()
     if (!SubTotal) {
       calculateSubtotal()
     }
-    let orderID = Math.floor(Math.random() * Date.now())
-    const data = { email, name ,phone, city, state, pin, address, cart, SubTotal, orderID }
-    let response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/Stripe/preTranscation`, {
-      method: 'POST', // or 'PUT'
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    })
-    response = await response.json()
-    console.log(response)
-    if (response.success === false && response.error) {
-      toast.error("Please, fill the form correctly. Thank you!", {
+
+    if (email && name && phone && district && state && pin && address && cart && SubTotal) {
+      console.log(phone.length)
+      if (phone.length < 11) {
+        showTost("Phone number must be 11 degits.")
+        return;
+      }
+      let orderID = Math.floor(Math.random() * Date.now())
+      const data = { email, name, phone, district, state, pin, address, cart, SubTotal, orderID }
+      let response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/Stripe/preTranscation`, {
+        method: 'POST', // or 'PUT'
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+      response = await response.json()
+      console.log(response)
+      if (response.success === false && response.error) {
+        showTost(response.error);
+        setTimeout(() => {
+          // clearCart()
+          // router.push('/')
+        }, 5000);
+      }
+      if (response.status === "Paid" || response.status === 'Pending') {
+        toast.success("Order Placed. Thank you!", {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        clearCart()
+        router.push(`/order/?id=${response.orderid}`)
+      }
+    }
+    else {
+      toast.error("Please, fill the from correctly.", {
         position: "top-center",
         autoClose: 3000,
-        hideProgressBar: false,
+        hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
       });
-      setTimeout(() => {
-        clearCart()
-        router.push('/')
-      }, 3000);
-    }
-    if (response.status === "Paid" || response.status === 'Pending') {
-      toast.success("Order Placed. Thank you!", {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-      clearCart()
-      router.push(`/order/?id=${response.orderid}`)
+      return;
     }
   }
+
 
   return (
     <div>
@@ -136,16 +164,16 @@ const Checkout = ({ cart, removeFromCart, addToCart, calculateSubtotal, SubTotal
 
               <div className="relative mb-4 flex space-x-4 items-center">
                 <label htmlFor="phone" className="leading-7 text-sm text-gray-400 font-semibold">phone</label>
-                <input value={phone} onChange={(event) => setPhone(event.target.value)} type="tel" id="phone" placeholder='032229999000' phone="phone" className="w-1/2 bg-gray-800 rounded border border-gray-700 focus:border-green-500 focus:ring-2 focus:ring-green-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                <input value={phone} onChange={(event) =>  /^[0-9]*$/.test(event.target.value) ? setPhone(event.target.value) : ''} type="tel" id="phone" placeholder='+92 ----------' phone="phone" className="w-1/2 bg-gray-800 rounded border border-gray-700 focus:border-green-500 focus:ring-2 focus:ring-green-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
 
-                <label htmlFor="pincode" className="leading-7 text-sm text-gray-400 font-semibold">pin</label>
+                <label htmlFor="pincode" min="1" max="5" className="leading-7 text-sm text-gray-400 font-semibold">pin</label>
                 <input value={pin} onChange={handelPinCode} type="tel" placeholder='pin Code' id="pincode" name="pincode" className="w-1/2 bg-gray-800 rounded border border-gray-700 focus:border-green-500 focus:ring-2 focus:ring-green-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
 
 
               </div>
 
 
-              {/* state and city. */}
+              {/* state and district. */}
 
               <div className="relative mb-4 flex space-x-4 items-center">
                 <label htmlFor="state" className="leading-7 text-sm text-gray-400 font-semibold">state</label>
@@ -153,10 +181,10 @@ const Checkout = ({ cart, removeFromCart, addToCart, calculateSubtotal, SubTotal
                   // onChange={(event) => setState(event.target.value)}
                   type="text" id="state" placeholder='state (Albany)' state="state" className="w-1/2 bg-gray-800 rounded border border-gray-700 focus:border-green-500 focus:ring-2 focus:ring-green-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" readOnly={false} />
 
-                <label htmlFor="city" className="leading-7 text-sm text-gray-400 font-semibold">city</label>
-                <input value={city} disabled
+                <label htmlFor="district" className="leading-7 text-sm text-gray-400 font-semibold">district</label>
+                <input value={district} disabled
                   // onChange={(event) => setCity(event.target.value)}
-                  type="text" id="city" placeholder='city (New Yark)' name="city" className="w-1/2 bg-gray-800 rounded border border-gray-700 focus:border-green-500 focus:ring-2 focus:ring-green-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" readOnly={false} />
+                  type="text" id="district" placeholder='district (New Yark)' name="district" className="w-1/2 bg-gray-800 rounded border border-gray-700 focus:border-green-500 focus:ring-2 focus:ring-green-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" readOnly={false} />
 
               </div>
               <div className="relative mb-4">
@@ -167,9 +195,9 @@ const Checkout = ({ cart, removeFromCart, addToCart, calculateSubtotal, SubTotal
                 className="item-center text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded text-lg disabled:bg-green-300"
                 type='submitt'
                 onClick={checkout_order}
-                disabled={name && email && phone && city && pin && address && cart !== "{}" ? false : true}
+                disabled={name && email && phone && district && pin && address && cart !== "{}" ? false : true}
               >
-                Pay,  ${SubTotal}  </button>
+                Pay, <span className={`${!SubTotal ? "text-red-500 font-bold" : ""}`}> ${SubTotal} </span> </button>
             </form>
             {/* Review Cart Items */}
 

@@ -1,16 +1,26 @@
-import React, { useRef, useState,useEffect } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { BsFillCartFill, BsFillBagCheckFill, BsFillBellFill } from 'react-icons/bs'
 import { AiFillCloseCircle, AiFillMinusCircle, AiFillPlusCircle } from 'react-icons/ai'
 import { MdAccountCircle } from 'react-icons/md'
 import { ToastContainer, toast } from 'react-toastify';
+import { useRouter } from 'next/router'
 
 const Navbar = ({ cart, addToCart, removeFromCart, clearCart, SubTotal, user, logOut, calculateSubtotal }) => {
   const ref = useRef()
   const [dropDown, setdropDown] = useState(false)
   const [notification, setNotification] = useState(false)
+  const [sideCart, setSideCart] = useState(false)
+  const router = useRouter()
+
   useEffect(() => {
+    console.log(user)
+    Object.keys(cart).length !== 0 && setSideCart(true)
+    let exempted = ['/checkout', '/orders', '/orders', '/account', '/',]
+    if (exempted.includes(router.pathname)) {
+      setSideCart(false)
+    }
     if (!SubTotal) {
       calculateSubtotal()
     }
@@ -33,20 +43,11 @@ const Navbar = ({ cart, addToCart, removeFromCart, clearCart, SubTotal, user, lo
   }
 
   const activeCart = () => {
-    if (ref.current.classList.contains('translate-x-full')) {
-      ref.current.classList.remove('translate-x-full')
-      ref.current.classList.add('translate-x-0')
-      ref.current.classList.add('mr-2')
-    }
-    else if (ref.current.classList.contains('translate-x-0')) {
-      ref.current.classList.remove('translate-x-0')
-      ref.current.classList.remove('mr-2')
-      ref.current.classList.add('translate-x-full')
-    }
+    setSideCart(!sideCart)
   }
 
   return (
-    <div className='z-30 flex flex-col items-center justify-center md:flex-row md:justify-start bg-gray-900 shadow-md shadow-green-400 overflow-visible sticky top-0'>
+    <div className={`z-30 flex flex-col items-center justify-center md:flex-row md:justify-start bg-gray-900 shadow-md shadow-green-400 overflow-visible sticky top-0 ${!sideCart && 'overflow-hidden'} `}>
       <ToastContainer
         position="top-center"
         autoClose={2000}
@@ -75,61 +76,58 @@ const Navbar = ({ cart, addToCart, removeFromCart, clearCart, SubTotal, user, lo
 
         {/* Notification */}
 
-        <span onClick={() => notification ? setNotification(false) : setNotification(true)}>
-          {notification && <div className="absolute rounded-md shadow-green-200 shadow-sm bg-green-200 right-16 top-6 w-56 p-4 py-4 text-black ">
-            <span onClick={() => setNotification(false)} className='top-4 right-2 absolute text-2xl cursor-pointer text-red-700'> <AiFillCloseCircle /> </span>
-            <ul>
-              <li className=' py-1 text-lg hover:text-green-600 font-bold flex flex-row'>
-                Notification
-              </li>
-              <hr className="h-0 my-2 border border-solid border-t-0 border-gray-700 opacity-25" />
-              <li className='transition ease-in-out hover:-translate-y-0.5 hover:scale-110 duration-150 py-1 text-sm hover:text-green-600 font-bold'>Notifcation Box Is Empty</li>
-            </ul>
-          </div>}
+        {user.value &&
+          <>
+            <span onClick={() => notification ? setNotification(false) : setNotification(true)}>
+              {notification && <div className="absolute rounded-md shadow-green-200 shadow-sm bg-green-200 right-16 top-6 w-56 p-4 py-4 text-black ">
+                <span onClick={() => setNotification(false)} className='top-4 right-2 absolute text-2xl cursor-pointer text-red-700'> <AiFillCloseCircle /> </span>
+                <ul>
+                  <li className=' py-1 text-lg hover:text-green-600 font-bold flex flex-row'>
+                    Notification
+                  </li>
+                  <hr className="h-0 my-2 border border-solid border-t-0 border-gray-700 opacity-25" />
+                  <li className='transition ease-in-out hover:-translate-y-0.5 hover:scale-110 duration-150 py-1 text-sm hover:text-green-600 font-bold'>Notifcation Box Is Empty</li>
+                </ul>
+              </div>}
 
 
-          {/* Accounts and Cart Icons */}
-          {user.value &&
-            <BsFillBellFill onClick={() => notification ? setNotification(false) : setNotification(true)} className='text-xl md:text-2xl hover:text-green-400 text-white transition ease-in-out hover:-translate-y-0.5 hover:scale-110 duration-150 cursor-pointer' />
-          }
-        </span>
+              {user.value &&
 
-        {/* Accounts */}
-
-        <span onClick={() => dropDown ? setdropDown(false) : setdropDown(true)}>
-          {dropDown && <div className="absolute rounded-md shadow-green-200 shadow-sm bg-green-200 right-7 top-6 w-56 p-4 py-4 text-black ">
-            <span onClick={() => setdropDown(false)} className='top-4 right-2 absolute text-2xl cursor-pointer text-red-700'> <AiFillCloseCircle /> </span>
-            <ul>
-              <Link href={'/account'}>
-                <li className=' py-1 text-sm hover:text-green-600 font-bold flex flex-row'>
-                  <img
-                    src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
-                    className="rounded-full w-10"
-                    alt="Avatar"
-                  />
-                  <div className='pl-2'>
-                    <p className='text-sm text-gray-600'>{user.value.UserName}</p>
-                    <p className='text-sm text-gray-600'>{user.value.Email}</p>
-                  </div>
-                </li>
-              </Link>
-              <hr className="h-0 my-2 border border-solid border-t-0 border-gray-700 opacity-25" />
-              <Link href={'/account'}><li className='transition ease-in-out hover:-translate-y-0.5 hover:scale-110 duration-150 py-1 text-sm hover:text-green-600 font-bold'>My Profile</li></Link>
-              <Link href={'/orders'}><li className='transition ease-in-out hover:-translate-y-0.5 hover:scale-110 duration-150 py-1 text-sm hover:text-green-600 font-bold'>All Orders</li></Link>
-              <Link href={'/account'}><li className='transition ease-in-out hover:-translate-y-0.5 hover:scale-110 duration-150 py-1 text-sm hover:text-green-600 font-bold'>Setting</li></Link>
-              <li onClick={logout} className='transition ease-in-out hover:-translate-y-0.5 hover:scale-110 duration-150 py-1 text-sm hover:text-green-600 font-bold'>Logout</li>
-            </ul>
-          </div>}
+                <BsFillBellFill onClick={() => notification ? setNotification(false) : setNotification(true)} className='text-xl md:text-2xl hover:text-green-400 text-white transition ease-in-out hover:-translate-y-0.5 hover:scale-110 duration-150 cursor-pointer' />}
+            </span>
+            <span onClick={() => dropDown ? setdropDown(false) : setdropDown(true)}>
+              {dropDown && <div className="absolute rounded-md shadow-green-200 shadow-sm bg-green-200 right-7 top-6 w-56 p-4 py-4 text-black ">
+                <span onClick={() => setdropDown(false)} className='top-4 right-2 absolute text-2xl cursor-pointer text-red-700'> <AiFillCloseCircle /> </span>
+                <ul>
+                  <Link href={'/account'}>
+                    <li className=' py-1 text-sm hover:text-green-600 font-bold flex flex-row'>
+                      <img
+                        src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
+                        className="rounded-full w-10"
+                        alt="Avatar" />
+                      <div className='pl-2'>
+                        <p className='text-sm text-gray-600'>{user.value.UserName}</p>
+                        <p className='text-sm text-gray-600'>{user.value.Email}</p>
+                      </div>
+                    </li>
+                  </Link>
+                  <hr className="h-0 my-2 border border-solid border-t-0 border-gray-700 opacity-25" />
+                  <Link href={'/account'}><li className='transition ease-in-out hover:-translate-y-0.5 hover:scale-110 duration-150 py-1 text-sm hover:text-green-600 font-bold'>My Profile</li></Link>
+                  <Link href={'/orders'}><li className='transition ease-in-out hover:-translate-y-0.5 hover:scale-110 duration-150 py-1 text-sm hover:text-green-600 font-bold'>All Orders</li></Link>
+                  <Link href={'/account'}><li className='transition ease-in-out hover:-translate-y-0.5 hover:scale-110 duration-150 py-1 text-sm hover:text-green-600 font-bold'>Setting</li></Link>
+                  <li onClick={logout} className='transition ease-in-out hover:-translate-y-0.5 hover:scale-110 duration-150 py-1 text-sm hover:text-green-600 font-bold'>Logout</li>
+                </ul>
+              </div>}
 
 
-          {/* Accounts and Cart Icons */}
-          {user.value &&
-            <MdAccountCircle onClick={() => dropDown ? setdropDown(false) : setdropDown(true)} className='text-xl md:text-2xl hover:text-green-400 text-white cursor-pointer transition ease-in-out hover:-translate-y-0.5 hover:scale-110 duration-150' />
-          }
-        </span>
-        {!user.value && <Link href={'/login'}>
-          <button className=' cursor-pointer text-xl hover:bg-green-600 hover:text-white rounded-md p-1 text-green-400 font-bold mx-2'>Login</button>
-        </Link>}
+              {user.value &&
+                <MdAccountCircle onClick={() => dropDown ? setdropDown(false) : setdropDown(true)} className='text-xl md:text-2xl hover:text-green-400 text-white cursor-pointer transition ease-in-out hover:-translate-y-0.5 hover:scale-110 duration-150' />}
+            </span>
+          </>}
+
+        {!user.value || localStorage.getItem('token') == {} ? <Link href={'/login'}>
+          <button className='cursor-pointer text-xl hover:bg-green-600 hover:text-white rounded-md p-1 text-green-400 font-bold mx-2'>Login</button>  
+        </Link> : " "}
         <BsFillCartFill onClick={activeCart} className='text-xl md:text-2xl hover:text-green-400 text-white transition ease-in-out hover:-translate-y-0.5 hover:scale-110 duration-150' />
       </div>
 
@@ -137,7 +135,7 @@ const Navbar = ({ cart, addToCart, removeFromCart, clearCart, SubTotal, user, lo
 
       {/* SideBar (Cart) */}
 
-      <div ref={ref} className="cart overflow-y-auto w-72 h-[90vh] absolute top-0 right-0 bg-green-200 px-8 py-10 rounded-md mt-14 transform transition-transform translate-x-full">
+      <div ref={ref} className={`cart overflow-y-auto w-72 h-[90vh] absolute top-0 bg-green-200 px-8 py-10 rounded-md mt-14 transition-all ${sideCart ? 'right-0' : '-right-96'} `}>
         <span onClick={activeCart} className='top-4 right-2 absolute text-2xl cursor-pointer text-red-700'> <AiFillCloseCircle /> </span>
         <h2 className='font-bold text-2xl text-center'>Shoping Cart</h2>
         <ol className='font-semibold list-decimal'>

@@ -1,17 +1,26 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Product from '../../models/Product'
 import mongoose from 'mongoose'
+import Error from 'next/error'
 import { ToastContainer, toast } from 'react-toastify';
 
-const Products = ({ addToCart, product, varients, buyNow }) => {
+const Products = ({ addToCart, product, varients, buyNow, error }) => {
   const router = useRouter()
   const { slug } = router.query
   const heart = useRef()
   const [Pin, setPin] = useState()
   const [Service, setService] = useState()
-  const [color, setcolor] = useState(product.color)
-  const [size, setsize] = useState(product.size)
+  const [color, setcolor] = useState()
+  const [size, setsize] = useState()
+
+  useEffect(() => {
+    if(!error){
+      setcolor(product.color)
+      setsize(product.size)
+    }
+  }, [router.query])
+
 
   const like = () => {
     if (heart.current.classList.contains('text-gray-500')) {
@@ -26,11 +35,8 @@ const Products = ({ addToCart, product, varients, buyNow }) => {
 
 
   const refVarient = (newColor, newSize) => {
-    // console.log(varients)
-    // console.log(newColor,newSize)
-    // console.log(varients[newColor][newSize])
     let url = `${process.env.NEXT_PUBLIC_HOST}/products/${varients[newColor][newSize]['slug']}`
-    window.location = url
+    router.push(url)
   }
 
   const checkServiceAbility = async () => {
@@ -49,7 +55,6 @@ const Products = ({ addToCart, product, varients, buyNow }) => {
       });
     } else if (Service == undefined || Service == 'Empty') {
       setService('Empty')
-      console.log(Service)
       toast.warn('Please, Enter the pic code to check.', {
         position: "top-center",
         autoClose: 2000,
@@ -61,7 +66,6 @@ const Products = ({ addToCart, product, varients, buyNow }) => {
       });
     } else {
       setService(false)
-      console.log(Pin)
       toast.error('Sorry, Pin Code not serviceable', {
         position: "top-center",
         autoClose: 2000,
@@ -74,7 +78,9 @@ const Products = ({ addToCart, product, varients, buyNow }) => {
     }
     setPin('')
   }
-
+  if(error == 404){
+    return <Error statusCode={404}/>
+  }
   return (
     <>
       <section className="text-gray-400 bg-gray-900 body-font overflow-hidden">
@@ -96,7 +102,7 @@ const Products = ({ addToCart, product, varients, buyNow }) => {
               src={product.img} />
             <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
               <h2 className="text-sm title-font text-gray-500 tracking-widest">HSD BRAND</h2>
-              <h1 className="text-white text-3xl title-font font-medium mb-1">{product.title} (Ware the Code)</h1>
+              <h1 className="text-white text-2xl title-font font-medium mb-1">{product.title} ( {product.color} / {product.size} ) </h1>
 
               {/* Reviews ICONS  */}
 
@@ -141,7 +147,11 @@ const Products = ({ addToCart, product, varients, buyNow }) => {
               {/* Description */}
 
               <p className="leading-relaxed">{product.desc}</p>
+
               <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-800 mb-5">
+
+                {/* Colors */}
+
                 <div className="flex">
 
                   <span className="mr-3">Color</span>
@@ -173,8 +183,10 @@ const Products = ({ addToCart, product, varients, buyNow }) => {
                   <span className="mr-3">Size</span>
                   <div className="relative">
 
+                    {/* Sizes */}
+
                     <select value={size} onChange={(e) => refVarient(color, e.target.value)} className="rounded border border-gray-700 focus:ring-2 focus:ring-green-900 bg-transparent appearance-none py-2 focus:outline-none focus:border-green-500 text-gray-400 pl-3 pr-10">
-                      {console.log(Object.keys(varients[color]).includes('XL'))}
+                      {/* {console.log(Object.keys(varients[color]).includes('XL'))} */}
                       {/* {Object.keys(varients).map(itemColor => {
                         // let colors = ['black', 'green', 'blue', 'purple', 'gray', 'red', 'white']
                         let sizes = ['S', 'M', 'L', 'XL', 'XXL']
@@ -185,11 +197,11 @@ const Products = ({ addToCart, product, varients, buyNow }) => {
                         console.log(avilableSizes)
                       })} */}
 
-                      {Object.keys(varients[color]).includes('S') && <option value={'S'}>S</option>}
-                      {Object.keys(varients[color]).includes('M') && <option value={'M'}>M</option>}
-                      {Object.keys(varients[color]).includes('L') && <option value={'L'}>L</option>}
-                      {Object.keys(varients[color]).includes('XL') && <option value={'XL'}>XL</option>}
-                      {Object.keys(varients[color]).includes('XXL') && <option value={'XXL'}>XXL</option>}
+                      {color && Object.keys(varients[color]).includes('S') && <option value={'S'}>S</option>}
+                      {color && Object.keys(varients[color]).includes('M') && <option value={'M'}>M</option>}
+                      {color && Object.keys(varients[color]).includes('L') && <option value={'L'}>L</option>}
+                      {color && Object.keys(varients[color]).includes('XL') && <option value={'XL'}>XL</option>}
+                      {color && Object.keys(varients[color]).includes('XXL') && <option value={'XXL'}>XXL</option>}
                     </select>
                     <span className="absolute right-0 top-0 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center">
                       <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-4 h-4" viewBox="0 0 24 24">
@@ -199,24 +211,32 @@ const Products = ({ addToCart, product, varients, buyNow }) => {
                   </div>
                 </div>
               </div>
-              <div className="flex">
-                <span className="title-font font-medium text-2xl text-white">${product.price}</span>
 
-                <button onClick={() => buyNow(product.slug, product.title, product.price, product.size, product.color, 1)} className="flex ml-10 text-white bg-green-500 border-0 py-2 px-2 md:px-3 md:ml-20 focus:outline-none hover:bg-green-600 rounded">Buy Now</button>
+              {product.availableQty > 0 ?
+                <div className="flex">
+                  <span className="title-font font-medium text-2xl text-white">${product.price}</span>
 
-                {/* Add TO Cart */}
+                  <button disabled={product.availableQty <= 0 && true} onClick={() => buyNow(product.slug, product.title, product.price, product.size, product.color, 1)} className="flex ml-10 text-white bg-green-500 border-0 py-2 px-2 md:px-3 md:ml-20 focus:outline-none hover:bg-green-600 rounded disabled:bg-green-300">Buy Now</button>
 
-                <button
-                  onClick={() => addToCart(product.slug, product.title, product.price, product.size, product.color, 1)}
-                  className="flex ml-2 text-white bg-green-500 border-0 py-2 px-2 md:px-6 md:ml-5 focus:outline-none hover:bg-green-600 rounded"
-                >Add To Cart
-                </button>
-                <button ref={heart} onClick={like} className="rounded-full w-10 h-10 bg-gray-800 p-0 border-0 inline-flex items-center justify-center text-gray-500 md:ml-4 ml-2">
-                  <svg fill="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-5 h-5" viewBox="0 0 24 24">
-                    <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
-                  </svg>
-                </button>
-              </div>
+                  {/* Add TO Cart */}
+
+                  <button
+                    onClick={() => addToCart(product.slug, product.title, product.price, product.size, product.color, 1)}
+                    disabled={product.availableQty <= 0 && true}
+                    className="flex ml-2 text-white bg-green-500 border-0 py-2 px-2 md:px-6 md:ml-5 focus:outline-none hover:bg-green-600 rounded disabled:bg-green-300"
+                  >Add To Cart
+                  </button>
+                  <button ref={heart} onClick={like} className="rounded-full w-10 h-10 bg-gray-800 p-0 border-0 inline-flex items-center justify-center text-gray-500 md:ml-4 ml-2">
+                    <svg fill="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-5 h-5" viewBox="0 0 24 24">
+                      <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
+                    </svg>
+                  </button>
+                </div>
+
+                :
+                <p className="leading-relaxed text-2xl font-bold">Item Out of Stock!</p>
+
+              }
               <div className="pincode flex space-x-2 text-sm mt-6">
                 <input onChange={(event) => setPin(event.target.value)} placeholder='Enter Your Pin Code' className='px-2 text-black rounded-md border-green-700 focus:outline-none focus:border-green-300 border-2' type="text" />
                 <button onClick={checkServiceAbility} className="text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded">Check Service</button>
@@ -248,6 +268,14 @@ export async function getServerSideProps(context) {
 
   }
   let product = await Product.findOne({ slug: context.query.slug })
+
+  let error = null;
+  if (product == null) {
+    return {
+      props: { error: 404 }
+    }
+  }
+
   let varients = await Product.find({ title: product.title })
   let colorSizeSlug = {} // { red: { XL: { slug: "Programer T-shirt" } } }
 
@@ -265,7 +293,7 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { product: JSON.parse(JSON.stringify(product)), varients: JSON.parse(JSON.stringify(colorSizeSlug)) },
+    props: { error, product: JSON.parse(JSON.stringify(product)), varients: JSON.parse(JSON.stringify(colorSizeSlug)) },
   }
 }
 

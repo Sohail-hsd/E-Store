@@ -27,7 +27,7 @@ function MyApp({ Component, pageProps }) {
       console.error(error)
       localStorage.clear()
     }
-    if(!user.value){
+    if(user.value == null){
       getUser()
     }
     setKey(Math.random())
@@ -45,12 +45,16 @@ function MyApp({ Component, pageProps }) {
   
       })
       response = await response.json()
-      if(response.status == false && response.Error.name === 'TokenExpiredError'){
-        logOut()
+      if(response.status === false){
+        localStorage.removeItem('token')
+        setUser({ value: null })
+        setKey(Math.random())
+        router.push('/')
+        return;
       }
-      setUser({ value: response })
-      // console.log(user)
+      setUser({ value: response.data })
     }
+    console.log(user)
   }
 
   const logOut = () => {

@@ -11,14 +11,14 @@ const handler = async (req, res) => {
                 if (err) {
                     return res.status(400).json({ status: false, Error: err })
                 }
-                
+
                 let user = await User.findOne({ id: decoded.id })
                 let data = {
                     UserName: user.name,
                     Email: user.email
                 }
-                return res.status(200).json(data)
-            });    
+                return res.status(200).json({ status: true, data })
+            });
 
         } else {
 
