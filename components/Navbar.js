@@ -16,7 +16,7 @@ const Navbar = ({ cart, addToCart, removeFromCart, clearCart, SubTotal, user, lo
 
   useEffect(() => {
     console.log(user)
-    Object.keys(cart).length !== 0 && setSideCart(true)
+    // Object.keys(cart).length !== 0 && setSideCart(true)
     let exempted = ['/checkout', '/orders', '/orders', '/account', '/',]
     if (exempted.includes(router.pathname)) {
       setSideCart(false)
@@ -78,6 +78,7 @@ const Navbar = ({ cart, addToCart, removeFromCart, clearCart, SubTotal, user, lo
 
         {user.value &&
           <>
+          <span className='absolute z-10 right-16 -top-1 px-1 text-black font-blod text-xs rounded-full bg-blue-400'>2</span>
             <span onClick={() => notification ? setNotification(false) : setNotification(true)}>
               {notification && <div className="absolute rounded-md shadow-green-200 shadow-sm bg-green-200 right-16 top-6 w-56 p-4 py-4 text-black ">
                 <span onClick={() => setNotification(false)} className='top-4 right-2 absolute text-2xl cursor-pointer text-red-700'> <AiFillCloseCircle /> </span>
@@ -101,10 +102,8 @@ const Navbar = ({ cart, addToCart, removeFromCart, clearCart, SubTotal, user, lo
                 <ul>
                   <Link href={'/account'}>
                     <li className=' py-1 text-sm hover:text-green-600 font-bold flex flex-row'>
-                      <img
-                        src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
-                        className="rounded-full w-10"
-                        alt="Avatar" />
+                    <img className="p-0.5 w-10 h-10 rounded-full ring-2 ring-blue-700 dark:ring-blue-600" 
+                    src="2.webp" alt="Bordered avatar" />
                       <div className='pl-2'>
                         <p className='text-sm text-gray-600'>{user.value.UserName}</p>
                         <p className='text-sm text-gray-600'>{user.value.Email}</p>
@@ -134,7 +133,10 @@ const Navbar = ({ cart, addToCart, removeFromCart, clearCart, SubTotal, user, lo
 
 
       {/* SideBar (Cart) */}
-
+      {Object.keys(cart).length > 0 && 
+      <span className='absolute right-5 top-6 px-1 text-black font-blod text-xs rounded-full bg-blue-400'>
+        {Object.keys(cart).length}
+        </span>}
       <div ref={ref} className={`cart overflow-y-auto w-72 h-[90vh] absolute top-0 bg-green-200 px-8 py-10 rounded-md mt-14 transition-all ${sideCart ? 'right-0' : '-right-96'} `}>
         <span onClick={activeCart} className='top-4 right-2 absolute text-2xl cursor-pointer text-red-700'> <AiFillCloseCircle /> </span>
         <h2 className='font-bold text-2xl text-center'>Shoping Cart</h2>

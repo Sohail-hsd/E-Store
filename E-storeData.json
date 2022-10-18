@@ -1,0 +1,101 @@
+{
+  "hoodies": {
+    "Hoodie": {
+      "_id": "62f24d9fb260b38a1054fab4",
+      "title": "Hoodie",
+      "slug": "Hoodies 1",
+      "desc": "This is the best hoodies we have.",
+      "img": "https://cdn.legacy.images.rushordertees.com/unsafe/672x707/eztees-catalogrebuild.s3.amazonaws.com/modelImages/tt30w_26_fr.jpg",
+      "category": "Hoodies",
+      "price": "49",
+      "size": [
+        "L"
+      ],
+      "color": [
+        "blue",
+        "red"
+      ],
+      "availableQty": 200,
+      "createdAt": "2022-08-09T12:05:51.900Z",
+      "updatedAt": "2022-08-09T12:05:51.900Z",
+      "__v": 0
+    },
+    "Heart Hoodies ": {
+      "_id": "62f24d9fb260b38a1054fab7",
+      "title": "Heart Hoodies ",
+      "slug": "Hoodies 2",
+      "desc": "This is the best mug we have.",
+      "img": "https://cdn.legacy.images.rushordertees.com/unsafe/672x707/eztees-catalogrebuild.s3.amazonaws.com/modelImages/tt30w_30_fr.jpg",
+      "category": "Hoodies",
+      "price": "59",
+      "size": [
+        "S",
+        "L"
+      ],
+      "color": [
+        "black"
+      ],
+      "availableQty": 200,
+      "createdAt": "2022-08-09T12:05:51.930Z",
+      "updatedAt": "2022-08-09T12:05:51.930Z",
+      "__v": 0
+    },
+    "Back Pink Hoodies ": {
+      "_id": "62f24d9fb260b38a1054fabd",
+      "title": "Back Pink Hoodies ",
+      "slug": "Hoodies 5",
+      "desc": "This is the best Black Pink mug we have.",
+      "img": "https://cdn.legacy.images.rushordertees.com/unsafe/672x707/eztees-catalogrebuild.s3.amazonaws.com/modelImages/b7502_F4_fr.jpg",
+      "category": "Hoodies",
+      "price": "59",
+      "size": [
+        "S"
+      ],
+      "color": [
+        "black"
+      ],
+      "availableQty": 200,
+      "createdAt": "2022-08-09T12:05:51.941Z",
+      "updatedAt": "2022-08-09T12:05:51.941Z",
+      "__v": 0
+    },
+    "Black Hoodies ": {
+      "_id": "62f24d9fb260b38a1054fac3",
+      "title": "Black Hoodies ",
+      "slug": "Hoodies 8",
+      "desc": "This is the best black mug we have.",
+      "img": "https://cdn.legacy.images.rushordertees.com/unsafe/672x707/eztees-catalogrebuild.s3.amazonaws.com/modelImages/sf76r_bb_fr.jpg",
+      "category": "Hoodies",
+      "price": "59",
+      "size": [
+        "S",
+        "XXL",
+        "XLL"
+      ],
+      "color": [
+        "blue",
+        "black",
+        "green"
+      ],
+      "availableQty": 200,
+      "createdAt": "2022-08-09T12:05:51.958Z",
+      "updatedAt": "2022-08-09T12:05:51.958Z",
+      "__v": 0
+    }
+  }
+}
+
+
+
+/// User addUser
+
+
+{
+  "name": "Sohial",
+  "email": "hsd@gmail18.com",
+  "password": "U2FsdGVkX1+HeaVgb5C2ULefrpuFr9IjgIjtIVHrz2o=",
+  "address": "Swat, Pakistan",
+  "city": "Bakhshali",
+  "areaPinCode": "23250",
+  "phone": "03440503646"
+}

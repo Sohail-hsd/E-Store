@@ -22,10 +22,10 @@ const Checkout = ({ cart, removeFromCart, addToCart, calculateSubtotal, SubTotal
       router.push('/')
     } else {
       calculateSubtotal()
-      if (!name || !email) {
-        setEmail(user.value.Email)
-        setName(user.value.UserName)
-      }
+      // if (!name || !email) {
+      //   setEmail(user.value.Email)
+      //   setName(user.value.UserName)
+      // }
     }
   }, [])
 
@@ -44,7 +44,7 @@ const Checkout = ({ cart, removeFromCart, addToCart, calculateSubtotal, SubTotal
   const handelPinCode = async (event) => {
     /^[0-9]*$/.test(event.target.value) ? setPin(event.target.value) : ''
     if (event.target.value.length == 5) {
-      let pins = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pincode`)
+      let pins = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pincodes`)
       let pinsJson = await pins.json()
       if (Object.keys(pinsJson).includes(event.target.value)) {
         setCity(pinsJson[event.target.value][0])
@@ -62,14 +62,14 @@ const Checkout = ({ cart, removeFromCart, addToCart, calculateSubtotal, SubTotal
     var pattern = /^\d+\.?\d*$/;
     return pattern.test(str);  // returns a boolean
   }
+  
   const checkout_order = async (event) => {
     event.preventDefault()
     if (!SubTotal) {
       calculateSubtotal()
     }
 
-    if (email && name && phone && district && state && pin && address && cart && SubTotal) {
-      console.log(phone.length)
+    if (email.length < 10 && name.length < 3 && phone && district.length < 3 && state.length < 4 && pin.length < 4 && address.length < 10 && cart && SubTotal) {
       if (phone.length < 11) {
         showTost("Phone number must be 11 degits.")
         return;
@@ -87,10 +87,13 @@ const Checkout = ({ cart, removeFromCart, addToCart, calculateSubtotal, SubTotal
       console.log(response)
       if (response.success === false && response.error) {
         showTost(response.error);
-        setTimeout(() => {
-          // clearCart()
-          // router.push('/')
-        }, 5000);
+        console.log(response)
+        if(response.cart && response.cart === "clear"){
+          setTimeout(() => {
+            clearCart()
+            router.push('/')
+          }, 5000);
+        }
       }
       if (response.status === "Paid" || response.status === 'Pending') {
         toast.success("Order Placed. Thank you!", {
@@ -153,10 +156,10 @@ const Checkout = ({ cart, removeFromCart, addToCart, calculateSubtotal, SubTotal
 
               <div className="relative mb-4 flex space-x-4 items-center">
                 <label htmlFor="name" className="leading-7 text-sm text-gray-400 font-semibold">Name</label>
-                <input value={name} disabled onChange={(event) => setName(event.target.value)} type="text" id="name" placeholder='Name' name="name" className="w-1/2 bg-gray-800 rounded border border-gray-700 focus:border-green-500 focus:ring-2 focus:ring-green-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                <input value={user.value !== null ? user.value.UserName : name} disabled onChange={(event) => setName(event.target.value)} type="text" id="name" placeholder='Name' name="name" className="w-1/2 bg-gray-800 rounded border border-gray-700 focus:border-green-500 focus:ring-2 focus:ring-green-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
 
                 <label htmlFor="email" className="leading-7 text-sm text-gray-400 font-semibold">email</label>
-                <input value={email} disabled onChange={(event) => setEmail(event.target.value)} type="email" placeholder='email@gmail.com' id="email" name="email" className="w-1/2 bg-gray-800 rounded border border-gray-700 focus:border-green-500 focus:ring-2 focus:ring-green-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                <input value={user.value !== null ? user.value.Email : email} disabled onChange={(event) => setEmail(event.target.value)} type="email" placeholder='email@gmail.com' id="email" name="email" className="w-1/2 bg-gray-800 rounded border border-gray-700 focus:border-green-500 focus:ring-2 focus:ring-green-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
 
               </div>
 

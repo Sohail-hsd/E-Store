@@ -40,7 +40,7 @@ const Products = ({ addToCart, product, varients, buyNow, error }) => {
   }
 
   const checkServiceAbility = async () => {
-    let pins = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pincode`)
+    let pins = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pincodes`)
     let pinsJson = await pins.json()
     if (Object.keys(pinsJson).includes(Pin)) {
       setService(true)

@@ -1,0 +1,1153 @@
+[{
+  "_id": {
+    "$oid": "62f241f8b260b38a1054fa57"
+  },
+  "title": "HSD T-Shirt",
+  "slug": "HSD T-Shirt 2 new",
+  "desc": "This is the best t-shirt we have.",
+  "img": "https://cdn.rushordertees.com/design/ZoomImage.php?src=NTUyMTM2Mw_f&style=RT2000&colorCode=LIME&x=240&y=300&width=880&height=880&scale=1.7&watermark=false&autoInvertDesign=true",
+  "category": "T-shirt",
+  "price": 5,
+  "size": "XXL",
+  "color": "yellow",
+  "availableQty": 0,
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660043768470"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1665251972644"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62f241f8b260b38a1054fa59"
+  },
+  "title": "T-Shirt",
+  "slug": "HSD T-Shirt branded",
+  "desc": "This is the best t-shirt we have.",
+  "img": "https://cdn.rushordertees.com/design/ZoomImage.php?src=NTUyMTM2Mw_f&style=RT2000&colorCode=YLW&x=240&y=300&width=880&height=880&scale=1.7&watermark=false&autoInvertDesign=true",
+  "category": "T-shirt",
+  "price": 499,
+  "size": "S",
+  "color": "black",
+  "availableQty": 200,
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660043768480"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1660043768480"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62f241f8b260b38a1054fa5b"
+  },
+  "title": "T-Shirt",
+  "slug": "HSD T-Shirt new",
+  "desc": "This is the best t-shirt we have.",
+  "img": "https://cdn.rushordertees.com/design/ZoomImage.php?src=NTUyMTM2Mw_f&style=RT2000&colorCode=PURP&x=240&y=300&width=880&height=880&scale=1.7&watermark=false&autoInvertDesign=true",
+  "category": "T-shirt",
+  "price": 499,
+  "size": "L",
+  "color": "green",
+  "availableQty": "200",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660043768489"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1660043768489"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62f241f8b260b38a1054fa5d"
+  },
+  "title": "T-Shirt new branded 3 ",
+  "slug": "HSD T-Shirt new branded",
+  "desc": "This is the best t-shirt we have.",
+  "img": "https://cdn.rushordertees.com/design/ZoomImage.php?src=NTUyMTM2Mw_f&style=RT2000&colorCode=NAVY&x=240&y=300&width=880&height=880&scale=1.7&watermark=false&autoInvertDesign=true",
+  "category": "T-shirt",
+  "price": "499",
+  "size": "M",
+  "color": "white",
+  "availableQty": 200,
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660043768496"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1660043768496"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62f2425ab260b38a1054fa61"
+  },
+  "title": "T-Shirt",
+  "slug": "HSD T-Shirt best products 4",
+  "desc": "This is the best branded t-shirt we have.",
+  "img": "https://cdn.rushordertees.com/design/ZoomImage.php?src=NTUyMTM2Mw_f&style=RT2000&colorCode=IRGN&x=240&y=300&width=880&height=880&scale=1.7&watermark=false&autoInvertDesign=true",
+  "category": "T-shirt",
+  "price": 499,
+  "size": "XL",
+  "color": "black",
+  "availableQty": 200,
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660043866615"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1660043866615"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62f2425ab260b38a1054fa64"
+  },
+  "title": "HSD T-Shirt",
+  "slug": "HSD T-Shirt 5",
+  "desc": "This is the best t-shirt we have.",
+  "img": "https://cdn.rushordertees.com/design/ZoomImage.php?src=NTUyMTM2Mw_f&style=RT2000&colorCode=ICEG&x=240&y=300&width=880&height=880&scale=1.7&watermark=false&autoInvertDesign=true",
+  "category": "T-shirt",
+  "price": 59,
+  "size": "XXL",
+  "color": "green",
+  "availableQty": 18,
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660043866624"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1665589776156"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62f2499db260b38a1054fa94"
+  },
+  "title": "Mug 1",
+  "slug": "Qouted Mug",
+  "desc": "This is the best Mug we have.",
+  "img": "https://i.pinimg.com/564x/aa/4e/14/aa4e14c1c3db27ac41fbe5b2814b5993.jpg",
+  "category": "Mugs",
+  "price": "49",
+  "size": "L",
+  "color": "white",
+  "availableQty": "200",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660045725340"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1660045850037"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62f2499db260b38a1054fa97"
+  },
+  "title": "Heart Mug ",
+  "slug": "hart mug",
+  "desc": "This is the best mug we have.",
+  "img": "https://i.pinimg.com/564x/fe/a6/31/fea63183e282fcb2a8bf18d12feb6727.jpg",
+  "category": "Mugs",
+  "price": "59",
+  "size": "S",
+  "color": "black",
+  "availableQty": "200",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660045725365"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1660045850070"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62f2499db260b38a1054fa99"
+  },
+  "title": "Heart Mug ",
+  "slug": "hart mug 1",
+  "desc": "This is the best mug we have.",
+  "img": "https://i.pinimg.com/564x/46/03/99/460399efee867e3b3b9e28379d780fe5.jpg",
+  "category": "Mugs",
+  "price": "59",
+  "size": "S",
+  "color": "black",
+  "availableQty": "200",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660045725369"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1660045850076"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62f2499db260b38a1054fa9b"
+  },
+  "title": "Heart Mug ",
+  "slug": "hart mug 2",
+  "desc": "This is the best mug we have.",
+  "img": "https://i.pinimg.com/564x/c7/56/31/c75631a629db6d0e11010c9da6eb4f41.jpg",
+  "category": "Mugs",
+  "price": "59",
+  "size": "L",
+  "color": "blue",
+  "availableQty": "200",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660045725373"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1660045850081"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62f2499db260b38a1054fa9d"
+  },
+  "title": "Back Pink Mug ",
+  "slug": "Back Pink mug",
+  "desc": "This is the best Black Pink mug we have.",
+  "img": "https://i.pinimg.com/564x/41/ae/8c/41ae8cafd4c3b3024cbdb893319c298d.jpg",
+  "category": "Mugs",
+  "price": "59",
+  "size": "S",
+  "color": "blue",
+  "availableQty": "200",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660045725382"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1660045850088"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62f2499db260b38a1054fa9f"
+  },
+  "title": "White Mug ",
+  "slug": "White mug",
+  "desc": "This is the best white mug we have.",
+  "img": "https://i.pinimg.com/564x/af/3a/24/af3a24b2e48814e0ee5116a2a3b9eba6.jpg",
+  "category": "Mugs",
+  "price": "59",
+  "size": "L",
+  "color": "green",
+  "availableQty": "200",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660045725386"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1660045850094"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62f2499db260b38a1054faa1"
+  },
+  "title": "Black Mug ",
+  "slug": "Black mug",
+  "desc": "This is the best black mug we have.",
+  "img": "https://i.pinimg.com/564x/c7/56/31/c75631a629db6d0e11010c9da6eb4f41.jpg",
+  "category": "Mugs",
+  "price": "59",
+  "size": "M",
+  "color": "blue",
+  "availableQty": "200",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660045725390"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1660045850098"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62f24d9fb260b38a1054fab4"
+  },
+  "title": "Hoodie",
+  "slug": "Hoodies 1",
+  "desc": "This is the best hoodies we have.",
+  "img": "https://cdn.legacy.images.rushordertees.com/unsafe/672x707/eztees-catalogrebuild.s3.amazonaws.com/modelImages/tt30w_26_fr.jpg",
+  "category": "Hoodies",
+  "price": "49",
+  "size": "L",
+  "color": "blue",
+  "availableQty": "200",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660046751900"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1660046751900"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62f24d9fb260b38a1054fab7"
+  },
+  "title": "Heart Hoodies ",
+  "slug": "Hoodies 2",
+  "desc": "This is the best mug we have.",
+  "img": "https://cdn.legacy.images.rushordertees.com/unsafe/672x707/eztees-catalogrebuild.s3.amazonaws.com/modelImages/tt30w_30_fr.jpg",
+  "category": "Hoodies",
+  "price": "59",
+  "size": "S",
+  "color": "black",
+  "availableQty": "200",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660046751930"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1660046751930"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62f24d9fb260b38a1054fab9"
+  },
+  "title": "Heart Hoodies ",
+  "slug": "Hoodies 3",
+  "desc": "This is the best mug we have.",
+  "img": "https://cdn.legacy.images.rushordertees.com/unsafe/672x707/eztees-catalogrebuild.s3.amazonaws.com/modelImages/tt30w_60_fr.jpg",
+  "category": "Hoodies",
+  "price": "59",
+  "size": "S",
+  "color": "black",
+  "availableQty": "200",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660046751934"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1660046751934"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62f24d9fb260b38a1054fabb"
+  },
+  "title": "Heart Hoodies ",
+  "slug": "Hoodies 4",
+  "desc": "This is the best mug we have.",
+  "img": "https://cdn.legacy.images.rushordertees.com/unsafe/672x707/eztees-catalogrebuild.s3.amazonaws.com/modelImages/ja8926_BM_fr.jpg",
+  "category": "Hoodies",
+  "price": "59",
+  "size": "L",
+  "color": "black",
+  "availableQty": "200",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660046751937"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1660046751937"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62f24d9fb260b38a1054fabd"
+  },
+  "title": "Back Pink Hoodies ",
+  "slug": "Hoodies 5",
+  "desc": "This is the best Black Pink mug we have.",
+  "img": "https://cdn.legacy.images.rushordertees.com/unsafe/672x707/eztees-catalogrebuild.s3.amazonaws.com/modelImages/b7502_F4_fr.jpg",
+  "category": "Hoodies",
+  "price": "59",
+  "size": "S",
+  "color": "black",
+  "availableQty": 200,
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660046751941"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1660046751941"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62f24d9fb260b38a1054fac3"
+  },
+  "title": "Black Hoodies ",
+  "slug": "Hoodies 8",
+  "desc": "This is the best black mug we have.",
+  "img": "https://cdn.legacy.images.rushordertees.com/unsafe/672x707/eztees-catalogrebuild.s3.amazonaws.com/modelImages/sf76r_bb_fr.jpg",
+  "category": "Hoodies",
+  "price": "59",
+  "size": "S",
+  "color": "blue",
+  "availableQty": "200",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660046751958"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1660046751958"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62f24d9fb260b38a1054fac5"
+  },
+  "title": "Black Hoodies ",
+  "slug": "Hoodies 9",
+  "desc": "This is the best black mug we have.",
+  "img": "https://cdn.legacy.images.rushordertees.com/unsafe/672x707/eztees-catalogrebuild.s3.amazonaws.com/modelImages/ss4500_53_fr.jpg",
+  "category": "Hoodies",
+  "price": "59",
+  "size": "XXL",
+  "color": "black",
+  "availableQty": "200",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660046751964"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1660046751964"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62f24d9fb260b38a1054fac7"
+  },
+  "title": "Black Hoodies ",
+  "slug": "Hoodies 10",
+  "desc": "This is the best black mug we have.",
+  "img": "https://cdn.legacy.images.rushordertees.com/unsafe/672x707/eztees-catalogrebuild.s3.amazonaws.com/modelImages/f170_10_fr.jpg",
+  "category": "Hoodies",
+  "price": "59",
+  "size": "XLL",
+  "color": "green",
+  "availableQty": "200",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660046751968"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1660046751968"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62f2526eb260b38a1054fada"
+  },
+  "title": "Hoodie",
+  "slug": "Sticker for laptop 1",
+  "desc": "This is the best hoodies we have.",
+  "img": "https://m.media-amazon.com/images/I/61iqPK1B50L._AC_SX679_.jpg",
+  "category": "Hoodies",
+  "price": "4",
+  "size": "L",
+  "color": "red",
+  "availableQty": "200",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660047982038"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1660047982038"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62f2526eb260b38a1054fadd"
+  },
+  "title": "Heart Sticker for laptop ",
+  "slug": "Sticker for laptop 2",
+  "desc": "This is the best stickers we have.",
+  "img": "https://m.media-amazon.com/images/I/61gkZQWxnqL._AC_SX679_.jpg",
+  "category": "Sticker",
+  "price": "5",
+  "size": "M",
+  "color": "black",
+  "availableQty": "200",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660047982052"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1660047982052"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62f2526eb260b38a1054fadf"
+  },
+  "title": "Heart Sticker for laptop ",
+  "slug": "Sticker for laptop 3",
+  "desc": "This is the best stickers we have.",
+  "img": "https://m.media-amazon.com/images/I/316MEYmW6aL._AC_.jpg",
+  "category": "Sticker",
+  "price": "5",
+  "size": "M",
+  "color": "black",
+  "availableQty": "200",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660047982057"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1660047982057"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62f2526eb260b38a1054fae1"
+  },
+  "title": "Heart Sticker for laptop ",
+  "slug": "Sticker for laptop 4",
+  "desc": "This is the best stickers we have.",
+  "img": "https://m.media-amazon.com/images/I/41qTqhNFufL._AC_SX425_.jpg",
+  "category": "Sticker",
+  "price": "5",
+  "size": "L",
+  "color": "white",
+  "availableQty": "200",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660047982061"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1660047982061"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62f2526eb260b38a1054fae3"
+  },
+  "title": "Back Pink Sticker for laptop ",
+  "slug": "Sticker for laptop 5",
+  "desc": "This is the best Black Pink stickers we have.",
+  "img": "https://m.media-amazon.com/images/I/81lmx6R6qnL._AC_SX679_.jpg",
+  "category": "Sticker",
+  "price": "5",
+  "size": "M",
+  "color": "black",
+  "availableQty": "200",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660047982065"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1660047982065"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62f2526eb260b38a1054fae5"
+  },
+  "title": "White Sticker for laptop ",
+  "slug": "Sticker for laptop 6",
+  "desc": "This is the best white stickers we have.",
+  "img": "https://m.media-amazon.com/images/I/515YZ9cSzVL._AC_SX679_.jpg",
+  "category": "Sticker",
+  "price": "5",
+  "size": "S",
+  "color": "black",
+  "availableQty": "200",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660047982074"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1660047982074"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62f2526eb260b38a1054fae7"
+  },
+  "title": "Black Sticker for laptop ",
+  "slug": "Sticker for laptop 7",
+  "desc": "This is the best black stickers we have.",
+  "img": "https://m.media-amazon.com/images/I/51uzrlA0s8L._AC_.jpg",
+  "category": "Sticker",
+  "price": "5",
+  "size": "M",
+  "color": "black",
+  "availableQty": "200",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660047982082"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1660047982082"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62f6aac633d87f39da33a8b2"
+  },
+  "title": "HSD T-Shirt",
+  "slug": "T-shirt for a programmer",
+  "desc": "This is the best programmer T-shirt we have.",
+  "img": "https://m.media-amazon.com/images/I/61iqPK1B50L._AC_SX679_.jpg",
+  "category": "T-shirt",
+  "price": 49,
+  "size": "L",
+  "color": "red",
+  "availableQty": 20,
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660332743035"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1660332743035"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62f6ab6333d87f39da33a8b7"
+  },
+  "title": "HSD Shirt",
+  "slug": "programmer T-shirt",
+  "desc": "This is the best programmer T-shirt we have.",
+  "img": "https://cdn.rushordertees.com/design/ZoomImage.php?src=NTUyMTM2Mw_f&style=RT2000&colorCode=NAVY&x=240&y=300&width=880&height=880&scale=1.7&watermark=false&autoInvertDesign=true",
+  "category": "T-shirt",
+  "price": 49,
+  "size": "S",
+  "color": "blue",
+  "availableQty": "20",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660332899867"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1660332899867"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62f78a727914b5e689548be0"
+  },
+  "title": "HSD Shirt",
+  "slug": "programmer T-shirt 2",
+  "desc": "This is the best programmer T-shirt we have.",
+  "img": "https://m.media-amazon.com/images/I/61iqPK1B50L._AC_SX679_.jpg",
+  "category": "T-shirt",
+  "price": 49,
+  "size": "S",
+  "color": "green",
+  "availableQty": "20",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660390002534"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1660390002534"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62f78a7a7914b5e689548be3"
+  },
+  "title": "HSD Shirt",
+  "slug": "programmer T-shirt 3",
+  "desc": "This is the best programmer T-shirt we have.",
+  "img": "https://m.media-amazon.com/images/I/61iqPK1B50L._AC_SX679_.jpg",
+  "category": "T-shirt",
+  "price": 49,
+  "size": "S",
+  "color": "red",
+  "availableQty": "20",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660390010827"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1660390010827"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62f78a867914b5e689548be5"
+  },
+  "title": "HSD Shirt",
+  "slug": "programmer T-shirt 4",
+  "desc": "This is the best programmer T-shirt we have.",
+  "img": "https://m.media-amazon.com/images/I/61iqPK1B50L._AC_SX679_.jpg",
+  "category": "T-shirt",
+  "price": 49,
+  "size": "S",
+  "color": "purple",
+  "availableQty": "20",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660390022039"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1660390022039"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62f78a8e7914b5e689548be7"
+  },
+  "title": "HSD Shirt",
+  "slug": "programmer T-shirt 6",
+  "desc": "This is the best programmer T-shirt we have.",
+  "img": "https://m.media-amazon.com/images/I/61iqPK1B50L._AC_SX679_.jpg",
+  "category": "T-shirt",
+  "price": 49,
+  "size": "S",
+  "color": "yellow",
+  "availableQty": "20",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660390030886"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1660390030886"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62f78aae7914b5e689548beb"
+  },
+  "title": "HSD Shirt",
+  "slug": "programmer T-shirt 7",
+  "desc": "This is the best programmer T-shirt we have.",
+  "img": "https://m.media-amazon.com/images/I/61iqPK1B50L._AC_SX679_.jpg",
+  "category": "T-shirt",
+  "price": 49,
+  "size": "L",
+  "color": "yellow",
+  "availableQty": "20",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660390062225"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1660390062225"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62f78ab67914b5e689548bee"
+  },
+  "title": "HSD Shirt",
+  "slug": "programmer T-shirt 9",
+  "desc": "This is the best programmer T-shirt we have.",
+  "img": "https://m.media-amazon.com/images/I/61iqPK1B50L._AC_SX679_.jpg",
+  "category": "T-shirt",
+  "price": 49,
+  "size": "L",
+  "color": "blue",
+  "availableQty": "20",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660390070729"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1660390070729"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62f78abf7914b5e689548bf0"
+  },
+  "title": "HSD Shirt",
+  "slug": "programmer T-shirt 10",
+  "desc": "This is the best programmer T-shirt we have.",
+  "img": "https://m.media-amazon.com/images/I/61iqPK1B50L._AC_SX679_.jpg",
+  "category": "T-shirt",
+  "price": 49,
+  "size": "L",
+  "color": "green",
+  "availableQty": "20",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660390079543"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1660390079543"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62f78b247914b5e689548bfc"
+  },
+  "title": "HSD Shirt",
+  "slug": "programmer T-shirt 19",
+  "desc": "This is the best programmer T-shirt we have.",
+  "img": "https://m.media-amazon.com/images/I/61iqPK1B50L._AC_SX679_.jpg",
+  "category": "T-shirt",
+  "price": 49,
+  "size": "XL",
+  "color": "green",
+  "availableQty": "20",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660390180500"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1660390180500"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62f78b317914b5e689548bff"
+  },
+  "title": "HSD Shirt",
+  "slug": "programmer T-shirt 20",
+  "desc": "This is the best programmer T-shirt we have.",
+  "img": "https://m.media-amazon.com/images/I/61iqPK1B50L._AC_SX679_.jpg",
+  "category": "T-shirt",
+  "price": 49,
+  "size": "XL",
+  "color": "blue",
+  "availableQty": "20",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660390193755"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1660390193755"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62f78b3a7914b5e689548c01"
+  },
+  "title": "HSD Shirt",
+  "slug": "programmer T-shirt 21",
+  "desc": "This is the best programmer T-shirt we have.",
+  "img": "https://m.media-amazon.com/images/I/61iqPK1B50L._AC_SX679_.jpg",
+  "category": "T-shirt",
+  "price": 49,
+  "size": "XL",
+  "color": "red",
+  "availableQty": "20",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660390202472"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1660390202472"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62f78b427914b5e689548c03"
+  },
+  "title": "HSD Shirt",
+  "slug": "programmer T-shirt 22",
+  "desc": "This is the best programmer T-shirt we have.",
+  "img": "https://m.media-amazon.com/images/I/61iqPK1B50L._AC_SX679_.jpg",
+  "category": "T-shirt",
+  "price": 49,
+  "size": "XXL",
+  "color": "red",
+  "availableQty": "20",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660390210198"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1660390210198"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62f78b4c7914b5e689548c05"
+  },
+  "title": "HSD Shirt",
+  "slug": "programmer T-shirt 23",
+  "desc": "This is the best programmer T-shirt we have.",
+  "img": "https://m.media-amazon.com/images/I/61iqPK1B50L._AC_SX679_.jpg",
+  "category": "T-shirt",
+  "price": "49",
+  "size": "XXL",
+  "color": "purple",
+  "availableQty": "20",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660390220667"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1660390220667"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62f78b537914b5e689548c07"
+  },
+  "title": "HSD Shirt",
+  "slug": "programmer T-shirt 24",
+  "desc": "This is the best programmer T-shirt we have.",
+  "img": "https://m.media-amazon.com/images/I/61iqPK1B50L._AC_SX679_.jpg",
+  "category": "T-shirt",
+  "price": "49",
+  "size": "XXL",
+  "color": "black",
+  "availableQty": "20",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660390227805"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1660390227805"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62f78b5d7914b5e689548c09"
+  },
+  "title": "HSD Shirt",
+  "slug": "programmer T-shirt 25",
+  "desc": "This is the best programmer T-shirt we have.",
+  "img": "https://m.media-amazon.com/images/I/61iqPK1B50L._AC_SX679_.jpg",
+  "category": "T-shirt",
+  "price": "49",
+  "size": "XXL",
+  "color": "white",
+  "availableQty": "20",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660390237230"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1660390237230"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62f78e627914b5e689548c2e"
+  },
+  "title": "HSD T-Shirt 99",
+  "slug": "HSD T-Shirt 3 new",
+  "desc": "This is the best t-shirt we have.",
+  "img": "https://cdn.rushordertees.com/design/ZoomImage.php?src=NTUyMTM2Mw_f&style=RT2000&colorCode=LIME&x=240&y=300&width=880&height=880&scale=1.7&watermark=false&autoInvertDesign=true",
+  "category": "T-shirt",
+  "price": "99",
+  "size": "XL",
+  "color": "green",
+  "availableQty": 17,
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660391010844"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1664302596864"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62f78e807914b5e689548c3d"
+  },
+  "title": "HSD T-Shirt",
+  "slug": "HSD T-Shirt 4 new",
+  "desc": "This is the best t-shirt we have.",
+  "img": "https://cdn.rushordertees.com/design/ZoomImage.php?src=NTUyMTM2Mw_f&style=RT2000&colorCode=LIME&x=240&y=300&width=880&height=880&scale=1.7&watermark=false&autoInvertDesign=true",
+  "category": "T-shirt",
+  "price": 599,
+  "size": "XL",
+  "color": "blue",
+  "availableQty": 0,
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660391040994"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1660391040994"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62f78e8a7914b5e689548c40"
+  },
+  "title": "HSD T-Shirt",
+  "slug": "HSD T-Shirt 6 new",
+  "desc": "This is the best t-shirt we have.",
+  "img": "https://cdn.rushordertees.com/design/ZoomImage.php?src=NTUyMTM2Mw_f&style=RT2000&colorCode=LIME&x=240&y=300&width=880&height=880&scale=1.7&watermark=false&autoInvertDesign=true",
+  "category": "T-shirt",
+  "price": 599,
+  "size": "XL",
+  "color": "purple",
+  "availableQty": 20,
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660391050276"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1660391050276"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62f790307914b5e689548c73"
+  },
+  "title": "HSD T-Shirt",
+  "slug": "HSD T-Shirt 7 new",
+  "desc": "This is the best t-shirt we have.",
+  "img": "https://cdn.rushordertees.com/design/ZoomImage.php?src=NTUyMTM2Mw_f&style=RT2000&colorCode=LIME&x=240&y=300&width=880&height=880&scale=1.7&watermark=false&autoInvertDesign=true",
+  "category": "T-shirt",
+  "price": 599,
+  "size": "XL",
+  "color": "yellow",
+  "availableQty": 20,
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660391472810"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1660391472810"
+    }
+  },
+  "__v": 0
+}]

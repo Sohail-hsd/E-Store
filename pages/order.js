@@ -98,7 +98,8 @@ const MyOrder = ({ order }) => {
                         {products[item].name} ( {products[item].size}  )
                       </th>
                       <td className="py-4 px-6">
-                        {products[item].varient}
+                        {/* {products[item].varient} */}
+                        <button className={`border-2 ml-1 bg-${products[item].varient}-700 rounded-full w-6 h-6 focus:outline-none ${products[item].varient == 'black' ? 'border-white' : 'border-gray-700'}`}></button>
                       </td>
                       <td className="py-4 px-6 text-center">
                         {products[item].qty}

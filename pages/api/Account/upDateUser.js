@@ -11,18 +11,18 @@ const handler = async (req, res) => {
                 if (err) {
                     return res.status(403).json({ status: false, Error: err });
                 }
+                // Security issues should be handeled --- [pending]
 
-                let user = await User.findOne({ id: decoded.id });
-                let data = {
-                    UserName: user.name,
-                    Email: user.email,
-                    address: user.address,
-                    city: user.city,
-                    areaPinCode: user.areaPinCode,
-                    phone: user.phone
+                await User.findOneAndUpdate({ id: decoded.id }, {
+                    name:req.body.username,
+                    address: req.body.address,
+                    phone: req.body.phone,
+                    city: req.body.city + ', ' + req.body.state,
+                    areaPinCode: req.body.areaPinCode,
 
-                };
-                return res.status(200).json({ status: true, data });
+                });
+
+                return res.status(200).json({ status: true, message: "user personal info updated" });
             });
 
         } catch (error) {

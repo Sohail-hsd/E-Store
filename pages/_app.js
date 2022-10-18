@@ -27,11 +27,17 @@ function MyApp({ Component, pageProps }) {
       console.error(error)
       localStorage.clear()
     }
-    if(user.value == null){
-      getUser()
-    }
-    setKey(Math.random())
+    console.log(router.pathname)
   }, [router.query])
+
+  useEffect(() => {
+    console.log("Second useEffact")
+    // if(user.value == null){
+      getUser()
+    // }
+    setKey(Math.random())
+  }, [router.pathname === '/'])
+  
 
   const getUser = async () => {
     const token = localStorage.getItem('token')
