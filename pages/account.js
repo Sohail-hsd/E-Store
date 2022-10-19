@@ -199,9 +199,21 @@ const Account = ({ cart, user, getUser }) => {
 
 
 
-                      <div className="mb-2 text-gray-400 mt-10">
+                      <div className="mb-2 text-gray-400 mt-1">
                         <i className="fas fa-briefcase mr-2 text-lg text-gray-400"></i>
-                        Solution Manager - Creative Tim Officer
+                        Address : {user.value !== null ? user.value.address : "address"}
+                      </div>
+                      <div className="mb-2 text-gray-400 mt-1">
+                        <i className="fas fa-briefcase mr-2 text-lg text-gray-400"></i>
+                        City : {user.value !== null ? user.value.city : "city"}
+                      </div>
+                      <div className="mb-2 text-gray-400 mt-1">
+                        <i className="fas fa-briefcase mr-2 text-lg text-gray-400"></i>
+                        Phone : {user.value !== null ? user.value.phone : "Phone"}
+                      </div>
+                      <div className="mb-2 text-gray-400 mt-1">
+                        <i className="fas fa-briefcase mr-2 text-lg text-gray-400"></i>
+                        Area Pin Code : {user.value !== null ? user.value.areaPinCode : "Area Pin Code"}
                       </div>
                       <div className="mb-2 text-gray-400">
                         <i className="fas fa-university mr-2 text-lg text-gray-400"></i>

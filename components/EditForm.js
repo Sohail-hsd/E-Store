@@ -2,9 +2,8 @@ import React, { Fragment, useState } from 'react'
 import Inputs from './Inputs'
 import { Accordion, AccordionHeader, AccordionBody, } from "@material-tailwind/react";
 
-const EditForm = ({user}) => {
+const EditForm = ({ user }) => {
     const [open, setOpen] = useState(1);
-    console.log(user)
     const [Values, setValues] = useState({
         username: '',
         email: user.value && user.value.Email,
@@ -38,7 +37,7 @@ const EditForm = ({user}) => {
             placeholder: 'Email (Cannnot be updated)',
             errorMessage: 'It should be a valid email address!',
             label: 'Email (Cannnot be updated)',
-            disabled:true,
+            disabled: true,
             required: true,
         },
         {
@@ -111,17 +110,25 @@ const EditForm = ({user}) => {
     }
 
     const updateUser = async (event) => {
+        // Client side validation --- [done]
         event.preventDefault()
-        console.log(Values)
-        if (Values.email.length < 10 && Values.username.length < 3 && Values.phone && Values.district.length < 3 &&
-            Values.state.length < 4 && Values.pin.length < 4 && Values.address.length < 10) {
-            if (phone.length < 11) {
-            }
+        if (Values.email.length > 10 && Values.username.length > 3 && Values.phone && Values.state.length > 3 && Values.pin.length > 4 && Values.address.length > 10) {
 
+            let res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/Account/updateUser`, {
+                // Sendind user profile info to the server --- [done]
+                method:'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': localStorage.getItem('token')
+                },
+                body: JSON.stringify(Values)
+            })
+            res = await res.json()
+            console.log(res)
         }
     }
-    const handelSubmit = () => {
-
+    const updateUserCredential = (event) => {
+        event.preventDefault()
     }
 
     const onChange = (event) => {
@@ -139,7 +146,7 @@ const EditForm = ({user}) => {
                         </li>
                     </AccordionHeader>
                     <AccordionBody>
-                        <form className='grid grid-cols-2 mt-4' onSubmit={handelSubmit}>
+                        <form className='grid grid-cols-2 mt-4' onSubmit={updateUser}>
                             {inputs.map(input => (
                                 <Inputs
                                     key={input.id}
@@ -151,7 +158,7 @@ const EditForm = ({user}) => {
                         </form>
                         <button
                             onClick={updateUser}
-                            className='bg-green-600 mt-1 p-3 rounded-md px-32 font-bold dark:text-white text-gray-600'>
+                            className='bg-green-600 mt-1 p-3 disabled:bg-green-300 rounded-md px-32 font-bold dark:text-white text-gray-600'>
                             Submit
                         </button>
                     </AccordionBody>
@@ -165,7 +172,7 @@ const EditForm = ({user}) => {
                         </li>
                     </AccordionHeader>
                     <AccordionBody className="grid grid-cols-1">
-                        <form className='grid grid-cols-2 ' onSubmit={handelSubmit}>
+                        <form className='grid grid-cols-2 ' onSubmit={updateUserCredential}>
                             <Inputs
                                 key={8}
                                 name='password'
@@ -191,10 +198,10 @@ const EditForm = ({user}) => {
                                 value={Values['cpassword']}
                                 onChange={onChange}
                             />
-                        <button
-                            className='bg-green-600 mt-5 mr-40 mx-5 p-3 rounded-md px-32 font-bold dark:text-white text-gray-600'>
-                            Submit
-                        </button>
+                            <button
+                                className='bg-green-600 disabled:bg-green-300 mt-5 mr-40 mx-5 p-3 rounded-md px-22 font-bold dark:text-white text-gray-600'>
+                                Update Credential
+                            </button>
                         </form>
                     </AccordionBody>
 
