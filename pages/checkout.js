@@ -22,10 +22,10 @@ const Checkout = ({ cart, removeFromCart, addToCart, calculateSubtotal, SubTotal
       router.push('/')
     } else {
       calculateSubtotal()
-      // if (!name || !email) {
-      //   setEmail(user.value.Email)
-      //   setName(user.value.UserName)
-      // }
+      if (!name || !email) {
+        setEmail(user.value.Email)
+        setName(user.value.UserName)
+      }
     }
   }, [])
 
@@ -49,6 +49,7 @@ const Checkout = ({ cart, removeFromCart, addToCart, calculateSubtotal, SubTotal
       if (Object.keys(pinsJson).includes(event.target.value)) {
         setCity(pinsJson[event.target.value][0])
         setState(pinsJson[event.target.value][1])
+
       } else {
         setCity('')
         setState('')
@@ -58,18 +59,16 @@ const Checkout = ({ cart, removeFromCart, addToCart, calculateSubtotal, SubTotal
       setState('')
     }
   }
-  const isNumber = (str) => {
-    var pattern = /^\d+\.?\d*$/;
-    return pattern.test(str);  // returns a boolean
-  }
-  
+
+  let values = { email, name, phone, district, state, pin, address, cart, SubTotal }
+  console.log(values)
   const checkout_order = async (event) => {
     event.preventDefault()
     if (!SubTotal) {
       calculateSubtotal()
     }
 
-    if (email.length < 10 && name.length < 3 && phone && district.length < 3 && state.length < 4 && pin.length < 4 && address.length < 10 && cart && SubTotal) {
+    if (email.length >= 10 && name.length >= 3 && phone && district.length >= 3 && state.length >= 4 && pin.length >= 4 && address.length >= 10 && cart && SubTotal) {
       if (phone.length < 11) {
         showTost("Phone number must be 11 degits.")
         return;
@@ -88,7 +87,7 @@ const Checkout = ({ cart, removeFromCart, addToCart, calculateSubtotal, SubTotal
       if (response.success === false && response.error) {
         showTost(response.error);
         console.log(response)
-        if(response.cart && response.cart === "clear"){
+        if (response.cart && response.cart === "clear") {
           setTimeout(() => {
             clearCart()
             router.push('/')
@@ -167,7 +166,7 @@ const Checkout = ({ cart, removeFromCart, addToCart, calculateSubtotal, SubTotal
 
               <div className="relative mb-4 flex space-x-4 items-center">
                 <label htmlFor="phone" className="leading-7 text-sm text-gray-400 font-semibold">phone</label>
-                <input value={phone} onChange={(event) =>  /^[0-9]*$/.test(event.target.value) ? setPhone(event.target.value) : ''} type="tel" id="phone" placeholder='+92 ----------' phone="phone" className="w-1/2 bg-gray-800 rounded border border-gray-700 focus:border-green-500 focus:ring-2 focus:ring-green-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                <input value={phone} onChange={(event) => /^[0-9]*$/.test(event.target.value) ? setPhone(event.target.value) : ''} type="tel" id="phone" placeholder='+92 ----------' phone="phone" className="w-1/2 bg-gray-800 rounded border border-gray-700 focus:border-green-500 focus:ring-2 focus:ring-green-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
 
                 <label htmlFor="pincode" min="1" max="5" className="leading-7 text-sm text-gray-400 font-semibold">pin</label>
                 <input value={pin} onChange={handelPinCode} type="tel" placeholder='pin Code' id="pincode" name="pincode" className="w-1/2 bg-gray-800 rounded border border-gray-700 focus:border-green-500 focus:ring-2 focus:ring-green-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />

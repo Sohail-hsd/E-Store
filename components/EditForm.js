@@ -11,7 +11,9 @@ const EditForm = ({ user }) => {
         pin: '',
         city: '',
         state: '',
-        address: '',
+        address: ''
+    })
+    const [Credentials, setCredentials] = useState({
         password: '',
         cpassword: ''
     })
@@ -91,6 +93,29 @@ const EditForm = ({ user }) => {
             required: true,
         },
     ]
+
+    const CredentialsInputs = [
+        {
+            key: 8,
+            name: 'password',
+            type: 'password',
+            placeholder: 'Password',
+            errorMessage: 'Password sholud be 3-16 characters and shoud include any 2 special character!',
+            label: 'Password',
+            pattern: '^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$',
+            required: true,
+        },
+        {
+            key: 9,
+            name: 'cpassword',
+            type: 'password',
+            placeholder: 'Conform Password',
+            errorMessage: 'Password dose`t matched!',
+            label: 'Conform Password',
+            pattern: Credentials['password'],
+            required: true,
+        }
+    ]
     const handelPinCode = async (event) => {
         /^[0-9]*$/.test(event.target.value) ? setPin(event.target.value) : ''
         if (event.target.value.length == 5) {
@@ -116,7 +141,7 @@ const EditForm = ({ user }) => {
 
             let res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/Account/updateUser`, {
                 // Sendind user profile info to the server --- [done]
-                method:'POST',
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': localStorage.getItem('token')
@@ -127,12 +152,28 @@ const EditForm = ({ user }) => {
             console.log(res)
         }
     }
-    const updateUserCredential = (event) => {
+    const updateUserCredential = async (event) => {
         event.preventDefault()
+        if (Credentials.password.length >= 8 && Credentials.cpassword === Credentials.password) {
+            console.log(Credentials);
+            const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/Account/updatePassword`,{
+                method:'POST',
+                headers:{
+                    'Content-Type':'application/json',
+                    'Autorization': localStorage.getItem('token')
+                },
+                body: JSON.stringify(Credentials)
+            })
+            await res.json();
+            console.log(res);
+        }
     }
 
     const onChange = (event) => {
         setValues({ ...Values, [event.target.name]: event.target.value })
+    }
+    const onCredintialsChange = (event) => {
+        setCredentials({ ...Credentials, [event.target.name]: event.target.value })
     }
     return (
 
@@ -173,32 +214,18 @@ const EditForm = ({ user }) => {
                     </AccordionHeader>
                     <AccordionBody className="grid grid-cols-1">
                         <form className='grid grid-cols-2 ' onSubmit={updateUserCredential}>
-                            <Inputs
-                                key={8}
-                                name='password'
-                                type='password'
-                                placeholder='Password'
-                                errorMessage='Password sholud be 3-16 characters and shoud include any 2 special character!'
-                                label='Password'
-                                pattern='^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$'
-                                required={true}
-                                value={Values['password']}
-                                onChange={onChange}
-                            />
-
-                            <Inputs
-                                key={9}
-                                name='cpassword'
-                                type='password'
-                                placeholder='Conform Password'
-                                errorMessage='Password dose`t matched!'
-                                label='Conform Password'
-                                pattern={Values['password']}
-                                required={true}
-                                value={Values['cpassword']}
-                                onChange={onChange}
-                            />
+                            {
+                                CredentialsInputs.map(input => (
+                                    <Inputs
+                                        key={input.key}
+                                        {...input}
+                                        value={Credentials[input.name]}
+                                        onChange={onCredintialsChange}
+                                    />
+                                ))
+                            }
                             <button
+                                type='submit'
                                 className='bg-green-600 disabled:bg-green-300 mt-5 mr-40 mx-5 p-3 rounded-md px-22 font-bold dark:text-white text-gray-600'>
                                 Update Credential
                             </button>

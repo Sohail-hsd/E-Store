@@ -50,6 +50,7 @@ const handler = async (req, res) => {
                 phone: req.body.phone,
                 orderID: req.body.orderID,
                 address: `${req.body.district}, ${req.body.state}, ${req.body.address}`,
+                city: req.body.district,
                 areaPinCode: req.body.pin,
                 amount: req.body.SubTotal,
                 products: req.body.cart,

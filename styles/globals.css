@@ -33,12 +33,16 @@
     filter: grayscale(0%) brightness(120%) sepia(598%) hue-rotate(50deg) saturate(1200%)
 }
 
+/* .infoInputs:invalid:not(:focus)  ~ .errMsg {
+    display: block;
+} */
+
 .infoInputs:invalid[focused="true"]  ~ .errMsg {
     display: block;
 }
 .infoInputs:invalid[focused="true"] {
     border: 2px solid rgb(202, 46, 46);
 }
-.infoInputs:valid[focused="false"] {
+.infoInputs:valid:focus {
     border: 2px solid rgb(87, 207, 39);
 }
