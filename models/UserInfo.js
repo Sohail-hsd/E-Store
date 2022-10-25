@@ -1,17 +1,16 @@
 const mongoose = require('mongoose');
 
-const UserSchema = new mongoose.Schema({
-    userId: { 
-        type: mongoose.Schema.Types.ObjectId,
-         ref: 'User',
-        required: true, 
+const UserInfoSchema = new mongoose.Schema({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId, // This userId is Refrencing 'User' collection.
+        ref: 'User',
     },
     name: { type: String, required: true },
-    address: { type: String, default: '' },
-    areaPinCode: { type: String, default: '' },
-    city: { type: String, default: '' },
-    phone: { type: String, default: '' },
+    address: { type: String, required: true },
+    areaPinCode: { type: String, required: true },
+    city: { type: String, required: true },
+    phone: { type: String, required: true },
 
 }, { timestamp: true });
 
-export default mongoose.models.User || mongoose.model('User', UserSchema)
+export default mongoose.models.UserInfo || mongoose.model('UserInfo', UserInfoSchema)

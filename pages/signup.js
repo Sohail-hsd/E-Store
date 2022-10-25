@@ -56,7 +56,7 @@ const Signup = () => {
           setPassword('')
           setConPassword('')
           setTimeout(() => {
-            router.push('/sigin')
+            router.push('/login')
           }, 2000);
         } else {
           toast.error('Please try Again, With a valid email address', {

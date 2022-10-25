@@ -7,7 +7,6 @@ const Account = ({ cart, user, getUser }) => {
   const router = useRouter()
   const [image, setImage] = useState(null);
   const [sideNav, setSideNav] = useState(false);
-  // const [user, setUser] = useState({value : null})
   const [createObjectURL, setCreateObjectURL] = useState(null);
 
 
@@ -192,7 +191,7 @@ const Account = ({ cart, user, getUser }) => {
                         {user.value !== null ? user.value.UserName : 'User Name'}
                       </h3>
 
-                      <div className="text-sm leading-normal mt-0 mb-2 text-gray-400 font-bold uppercase">
+                      <div className="text-sm leading-normal mt-0 mb-2 text-gray-400 font-bold ">
                         <i className="fas fa-map-marker-alt mr-2 text-lg "></i>
                         {user.value !== null ? user.value.Email : "Email"}
                       </div>

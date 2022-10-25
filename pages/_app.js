@@ -60,7 +60,7 @@ function MyApp({ Component, pageProps }) {
       }
       setUser({ value: response.data })
     }
-    console.log(user)
+    console.log(user.value)
   }
 
   const logOut = () => {
