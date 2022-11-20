@@ -5,9 +5,21 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import 'react-toastify/dist/ReactToastify.css';
 import LoadingBar from 'react-top-loading-bar'
+import createEmotionCache from "../src/createEmotionCache";
+import React from 'react'
+import PropTypes from "prop-types";
+import { CacheProvider } from "@emotion/react";
 
 
-function MyApp({ Component, pageProps }) {
+
+const clientSideEmotionCache = createEmotionCache();
+
+
+
+function MyApp(props) {
+  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+
+
   const [cart, setcart] = useState({})
   const [SubTotal, setSubTotal] = useState(0)
   const [key, setKey] = useState()
@@ -15,7 +27,7 @@ function MyApp({ Component, pageProps }) {
   const [progress, setProgress] = useState(0)
   const router = useRouter()
 
-  useEffect( () => {
+  useEffect(() => {
     router.events.on('routeChangeStart', () => setProgress(60))
     router.events.on('routeChangeComplete', () => setProgress(100))
     try {
@@ -33,11 +45,11 @@ function MyApp({ Component, pageProps }) {
   useEffect(() => {
     console.log("Second useEffact")
     // if(user.value == null){
-      getUser()
+    getUser()
     // }
     setKey(Math.random())
   }, [router.pathname === '/'])
-  
+
 
   const getUser = async () => {
     const token = localStorage.getItem('token')
@@ -48,19 +60,18 @@ function MyApp({ Component, pageProps }) {
           'Content-Type': 'application/json',
           'authorization': `${token}`
         },
-  
+
       })
       response = await response.json()
-      if(response.status === false){
+      if (response.status === false) {
         localStorage.removeItem('token')
         setUser({ value: null })
         setKey(Math.random())
         router.push('/')
         return;
       }
-      setUser({ value: response.data })
+      setUser({ value: response.data, userInfo: response.userInfo })
     }
-    console.log(user.value)
   }
 
   const logOut = () => {
@@ -131,19 +142,31 @@ function MyApp({ Component, pageProps }) {
     router.push('/checkout')
   }
 
+  console.log(router.pathname.startsWith('/admin'))
+
   return (
     <>
-      <LoadingBar
-        color='#1fbe67'
-        progress={progress}
-        waitingTime={400}
-        onLoaderFinished={() => setProgress(0)}
-      />
-      {key && <Navbar calculateSubtotal={calculateSubtotal} key={key} user={user} logOut={logOut} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} SubTotal={SubTotal} saveCart={saveCart} cart={cart} />}
-      <Component getUser={getUser} calculateSubtotal={calculateSubtotal} user={user} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} SubTotal={SubTotal} saveCart={saveCart} cart={cart} buyNow={buyNow} {...pageProps} />
-      <Footer />
-    </> 
+      <CacheProvider value={emotionCache}>
+
+        <LoadingBar
+          color='#1fbe67'
+          progress={progress}
+          waitingTime={400}
+          onLoaderFinished={() => setProgress(0)}
+        />
+        {/* router.pathname.startsWith('/admin') !== true &&  */}
+        {key && router.pathname.startsWith('/admin') !== true && <Navbar calculateSubtotal={calculateSubtotal} key={key} user={user} logOut={logOut} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} SubTotal={SubTotal} saveCart={saveCart} cart={cart} />}
+        <Component {...pageProps} getUser={getUser} calculateSubtotal={calculateSubtotal} user={user} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} SubTotal={SubTotal} saveCart={saveCart} cart={cart} buyNow={buyNow} {...pageProps} />
+        {router.pathname.startsWith('/admin') !== true && <Footer />}
+      </CacheProvider>
+    </>
   )
 }
 
 export default MyApp
+
+MyApp.propTypes = {
+  Component: PropTypes.elementType.isRequired,
+  emotionCache: PropTypes.object,
+  // pageProps: PropTypes.object.isRequired,
+};

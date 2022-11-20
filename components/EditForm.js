@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import Inputs from './Inputs'
 import { Accordion, AccordionHeader, AccordionBody, } from "@material-tailwind/react";
 
@@ -6,7 +6,7 @@ const EditForm = ({ user }) => {
     const [open, setOpen] = useState(1);
     const [Values, setValues] = useState({
         username: '',
-        email: user.value && user.value.Email,
+        email: '',
         phone: '',
         pin: '',
         city: '',
@@ -17,6 +17,11 @@ const EditForm = ({ user }) => {
         password: '',
         cpassword: ''
     })
+
+    useEffect(() => {
+        // fetchUserInfo()
+    }, [])
+
 
     const handleOpen = (value) => {
         setOpen(open === value ? 0 : value);
@@ -116,6 +121,9 @@ const EditForm = ({ user }) => {
             required: true,
         }
     ]
+
+    
+
     const handelPinCode = async (event) => {
         /^[0-9]*$/.test(event.target.value) ? setPin(event.target.value) : ''
         if (event.target.value.length == 5) {
@@ -137,29 +145,31 @@ const EditForm = ({ user }) => {
     const updateUser = async (event) => {
         // Client side validation --- [done]
         event.preventDefault()
-        if (Values.email.length > 10 && Values.username.length > 3 && Values.phone && Values.state.length > 3 && Values.pin.length > 4 && Values.address.length > 10) {
+        console.log("user Info Update")
+        console.log(Values)
+        // if (Values.email.length > 10 && Values.username.length > 3 && Values.phone && Values.state.length > 3 && Values.pin.length > 4 && Values.address.length > 10) {
 
-            let res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/Account/updateUser`, {
-                // Sendind user profile info to the server --- [done]
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': localStorage.getItem('token')
-                },
-                body: JSON.stringify(Values)
-            })
-            res = await res.json()
-            console.log(res)
-        }
+        let res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/Account/updateUserInfo`, {
+            // Sendind user profile info to the server --- [done]
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem('token')
+            },
+            body: JSON.stringify(Values)
+        })
+        res = await res.json()
+        console.log(res)
+        // // }
     }
     const updateUserCredential = async (event) => {
         event.preventDefault()
         if (Credentials.password.length >= 8 && Credentials.cpassword === Credentials.password) {
             console.log(Credentials);
-            const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/Account/updatePassword`,{
-                method:'POST',
-                headers:{
-                    'Content-Type':'application/json',
+            const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/Account/updatePassword`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
                     'Autorization': localStorage.getItem('token')
                 },
                 body: JSON.stringify(Credentials)
@@ -200,7 +210,7 @@ const EditForm = ({ user }) => {
                         <button
                             onClick={updateUser}
                             className='bg-green-600 mt-1 p-3 disabled:bg-green-300 rounded-md px-32 font-bold dark:text-white text-gray-600'>
-                            Submit
+                            Submit User info
                         </button>
                     </AccordionBody>
                 </Accordion>

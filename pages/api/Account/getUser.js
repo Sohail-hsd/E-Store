@@ -16,16 +16,18 @@ const handler = async (req, res) => {
                     }
                     if (decoded.id != null) {
                         let user = await User.findOne({ _id: decoded.id });
-                        let personalInfo = await UserInfo.findOne({ id: decoded.id });
+                        let { address, phone, city, areaPinCode, state } = await UserInfo.findOne({ id: decoded.id });
+                        let userInfo = {
+                            address,
+                            phone,
+                            areaPinCode,
+                            city,
+                        }
                         let data = {
                             UserName: user.name,
                             Email: user.email,
-                            address: personalInfo.address,
-                            phone: personalInfo.phone,
-                            city: personalInfo.city,
-                            areaPinCode: personalInfo.areaPinCode,
                         };
-                        return res.status(200).json({ status: true, data });
+                        return res.status(200).json({ status: true, data, userInfo });
                     }
                     resolve()
                 });

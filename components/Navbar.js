@@ -61,7 +61,7 @@ const Navbar = ({ cart, addToCart, removeFromCart, clearCart, SubTotal, user, lo
       />
       <div className="logo mx-5 ">
         <Link href={"/"}>
-          <a><Image className='transition ease-in-out hover:-translate-y-0.5 hover:scale-110 duration-150' src={'/blackLogo.png'} width={80} height={80} /></a>
+          <a><Image className='transition ease-in-out hover:-translate-y-0.5 hover:scale-110 duration-150' src={'/logo.png'} width={80} height={80} /></a>
         </Link>
       </div>
       <div className="nav">
@@ -78,7 +78,7 @@ const Navbar = ({ cart, addToCart, removeFromCart, clearCart, SubTotal, user, lo
 
         {user.value &&
           <>
-          <span className='absolute z-10 right-16 -top-1 px-1 text-black font-blod text-xs rounded-full bg-blue-400'>2</span>
+            <span className='absolute z-10 right-16 -top-1 px-1 text-black font-blod text-xs rounded-full bg-blue-400'>2</span>
             <span onClick={() => notification ? setNotification(false) : setNotification(true)}>
               {notification && <div className="absolute rounded-md shadow-green-200 shadow-sm bg-green-200 right-16 top-6 w-56 p-4 py-4 text-black ">
                 <span onClick={() => setNotification(false)} className='top-4 right-2 absolute text-2xl cursor-pointer text-red-700'> <AiFillCloseCircle /> </span>
@@ -102,8 +102,8 @@ const Navbar = ({ cart, addToCart, removeFromCart, clearCart, SubTotal, user, lo
                 <ul>
                   <Link href={'/account'}>
                     <li className=' py-1 text-sm hover:text-green-600 font-bold flex flex-row'>
-                    <img className="p-0.5 w-10 h-10 rounded-full ring-2 ring-blue-700 dark:ring-blue-600" 
-                    src="2.webp" alt="Bordered avatar" />
+                      <img className="p-0.5 w-10 h-10 rounded-full ring-2 ring-blue-700 dark:ring-blue-600"
+                        src="2.webp" alt="Bordered avatar" />
                       <div className='pl-2'>
                         <p className='text-sm text-gray-600'>{user.value.UserName}</p>
                         <p className='text-sm text-gray-600'>{user.value.Email}</p>
@@ -125,7 +125,7 @@ const Navbar = ({ cart, addToCart, removeFromCart, clearCart, SubTotal, user, lo
           </>}
 
         {!user.value || localStorage.getItem('token') == {} ? <Link href={'/login'}>
-          <button className='cursor-pointer text-xl hover:bg-green-600 hover:text-white rounded-md p-1 text-green-400 font-bold mx-2'>Login</button>  
+          <button className='cursor-pointer text-xl hover:bg-green-600 hover:text-white rounded-md p-1 text-green-400 font-bold mx-2'>Login</button>
         </Link> : " "}
         <BsFillCartFill onClick={activeCart} className='text-xl md:text-2xl hover:text-green-400 text-white transition ease-in-out hover:-translate-y-0.5 hover:scale-110 duration-150' />
       </div>
@@ -133,9 +133,9 @@ const Navbar = ({ cart, addToCart, removeFromCart, clearCart, SubTotal, user, lo
 
 
       {/* SideBar (Cart) */}
-      {Object.keys(cart).length > 0 && 
-      <span className='absolute right-5 top-6 px-1 text-black font-blod text-xs rounded-full bg-blue-400'>
-        {Object.keys(cart).length}
+      {Object.keys(cart).length > 0 &&
+        <span className='absolute right-5 top-6 px-1 text-black font-blod text-xs rounded-full bg-blue-400'>
+          {Object.keys(cart).length}
         </span>}
       <div ref={ref} className={`cart overflow-y-auto w-72 h-[90vh] absolute top-0 bg-green-200 px-8 py-10 rounded-md mt-14 transition-all ${sideCart ? 'right-0' : '-right-96'} `}>
         <span onClick={activeCart} className='top-4 right-2 absolute text-2xl cursor-pointer text-red-700'> <AiFillCloseCircle /> </span>
@@ -178,7 +178,11 @@ const Navbar = ({ cart, addToCart, removeFromCart, clearCart, SubTotal, user, lo
             <Link href={'/checkout'}>
               <button onClick={activeCart} className="flex mr-2 text-white font-bold bg-green-500 border-0 py-2 px-2 focus:outline-none hover:bg-green-600 rounded text-sm">Checkout <BsFillBagCheckFill className='mt-1 ml-2' /> </button>
             </Link>
-            <button disabled={Object.keys(cart).length == 0 ? true : false} onClick={clearCart} className="cursor-pointer flex mr-2 text-white font-bold bg-green-500 border-0 py-2 px-2 focus:outline-none hover:bg-green-600 rounded text-sm disabled:bg-green-400">Clear Cart </button>
+            <button disabled={Object.keys(cart).length == 0 ? true : false} onClick={() => {
+              clearCart()
+              setSideCart(false)
+              return;
+            }} className="cursor-pointer flex mr-2 text-white font-bold bg-green-500 border-0 py-2 px-2 focus:outline-none hover:bg-green-600 rounded text-sm disabled:bg-green-400">Clear Cart </button>
           </div>
         }
       </div>
