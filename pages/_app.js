@@ -142,7 +142,7 @@ function MyApp(props) {
     router.push('/checkout')
   }
 
-  console.log(router.pathname.startsWith('/admin'))
+  // console.log(router.pathname.startsWith('/admin'))
 
   return (
     <>
@@ -161,12 +161,12 @@ function MyApp(props) {
       </CacheProvider>
     </>
   )
-}
+}   
 
 export default MyApp
 
 MyApp.propTypes = {
-  Component: PropTypes.elementType.isRequired,
+  // Component: PropTypes.elementType.isRequired,
   emotionCache: PropTypes.object,
   // pageProps: PropTypes.object.isRequired,
 };

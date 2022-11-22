@@ -52,7 +52,7 @@ export default function Index(props) {
 }
 
 Index.propTypes = {
-    Component: PropTypes.elementType.isRequired,
+    // Component: PropTypes.elementType.isRequired,
     emotionCache: PropTypes.object,
     pageProps: PropTypes.object.isRequired,
 };

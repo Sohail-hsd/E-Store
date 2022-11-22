@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from "prop-types";
 import Head from "next/head";
 import { ThemeProvider } from "@mui/material/styles";
@@ -7,12 +7,53 @@ import { CacheProvider } from "@emotion/react";
 import theme from "../../src/theme/theme";
 import createEmotionCache from "../../src/createEmotionCache";
 import FullLayout from "../../src/layouts/FullLayout";
-import Forms from '../../components/Forms';
+import PhotoCamera from '@mui/icons-material/PhotoCamera';
+import BaseCard from "../../src/components/baseCard/BaseCard";
+import {
+    Grid,
+    Stack,
+    TextField,
+    InputLabel,
+    NativeSelect,
+    FormControl,
+    IconButton,
+    Button,
+} from "@mui/material";
 
 const clientSideEmotionCache = createEmotionCache();
 
 const AddProducts = (props) => {
-    const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+    const { emotionCache = clientSideEmotionCache, pageProps } = props;
+    const [AddProduct, setAddProduct] = useState({
+        productName: "",
+        slug: "",
+        productDesc: "",
+        price: "",
+        color: "",
+        availableQty: "",
+        size: "",
+        category: "",
+        img: "",
+    })
+
+    const onChange = (e) => {
+        setAddProduct({ ...AddProduct, [e.target.name]: [e.target.value] })
+        // console.log(AddProduct)
+    }
+
+    const onSubmit = async (e) => {
+        e.preventDefault()
+       let res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/Product//addProducts`, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                "authorization": JSON.stringify(localStorage.getItem('token'))
+            },
+            body: JSON.stringify(AddProduct)
+        })
+        let response = await res.json()
+        console.log(response)
+    }
 
     return (
         <CacheProvider value={emotionCache}>
@@ -24,7 +65,121 @@ const AddProducts = (props) => {
             <ThemeProvider theme={theme}>
                 <CssBaseline >
                     <FullLayout>
-                        <Forms />
+                        <Grid container spacing={0}>
+                            <Grid item xs={12} lg={12}>
+                                <BaseCard title="Add Product">
+                                    <Stack spacing={3}>
+                                        <TextField
+                                            name='productName'
+                                            value={AddProduct.productName}
+                                            onChange={onChange}
+                                            id="product-title"
+                                            label="Product title"
+                                            variant="outlined"
+                                        />
+                                        <TextField
+                                            name='slug'
+                                            value={AddProduct.slug}
+                                            onChange={onChange}
+                                            id="slug"
+                                            label="slug"
+                                            variant="outlined"
+                                        />
+
+                                        <TextField
+                                            name='productDesc'
+                                            value={AddProduct.productDesc}
+                                            onChange={onChange}
+                                            id="product-description"
+                                            label="Enter product description."
+                                            multiline
+                                            rows={4}
+                                        />
+                                    </Stack>
+                                </BaseCard>
+                            </Grid>
+
+                            <Grid item xs={12} lg={12}>
+                                <BaseCard title="Product varinets">
+                                    <Stack spacing={4} direction="row">
+                                        <TextField
+                                            id="Price"
+                                            name='price'
+                                            value={AddProduct.price}
+                                            onChange={onChange}
+                                            label="Rs."
+                                            variant="standard"
+                                        />
+                                        <TextField
+                                            id="Color"
+                                            name='color'
+                                            value={AddProduct.color}
+                                            onChange={onChange}
+                                            label="Color"
+                                            variant="standard"
+                                        />
+                                        <TextField
+                                            id="AvailableQuantity"
+                                            name='availableQty'
+                                            value={AddProduct.availableQty}
+                                            onChange={onChange}
+                                            label="Available Quantity"
+                                            variant="standard"
+                                        />
+                                        <FormControl>
+                                            <InputLabel variant="standard" htmlFor="uncontrolled-native">
+                                                Size
+                                            </InputLabel>
+                                            <NativeSelect
+                                                name='size'
+                                                value={AddProduct.size}
+                                                onChange={onChange}
+                                                inputProps={{
+                                                    name: 'size',
+                                                    id: 'uncontrolled-native',
+                                                }}
+                                            >
+                                                <option value={""}></option>
+                                                <option value={"SM"}>SM</option>
+                                                <option value={"LG"}>LG</option>
+                                                <option value={"XL"}>XL</option>
+                                                <option value={"XXL"}>XXL</option>
+                                            </NativeSelect>
+                                        </FormControl>
+                                        <FormControl>
+                                            <InputLabel variant="standard" htmlFor="uncontrolled-native">
+                                                Category
+                                            </InputLabel>
+                                            <NativeSelect
+                                                name='category'
+                                                value={AddProduct.category}
+                                                onChange={onChange}
+                                                defaultValue={""}
+                                                inputProps={{
+                                                    name: 'category',
+                                                    id: 'uncontrolled-native',
+                                                }}
+                                            >
+                                                <option value={""}></option>
+                                                <option value={"T-Shirt"}>T-Shirt</option>
+                                                <option value={"Hoddies"}>Hoddies</option>
+                                                <option value={"Mugs"}>Mugs</option>
+                                                <option value={"Stickers"}>Stickers</option>
+                                            </NativeSelect>
+                                        </FormControl>
+
+                                        <IconButton color="primary" aria-label="upload picture" component="label">
+                                            <input hidden accept="image/*" type="file" />
+                                            <PhotoCamera />
+                                        </IconButton>
+                                    </Stack>
+                                    <br />
+                                    <Button onClick={onSubmit} variant="contained">
+                                        Add product
+                                    </Button>
+                                </BaseCard>
+                            </Grid>
+                        </Grid>
                     </FullLayout>
                 </CssBaseline>
             </ThemeProvider>
@@ -35,7 +190,7 @@ const AddProducts = (props) => {
 export default AddProducts
 
 AddProducts.propTypes = {
-    Component: PropTypes.elementType.isRequired,
+    // Component: PropTypes.elementType.isRequired,
     emotionCache: PropTypes.object,
     pageProps: PropTypes.object.isRequired,
 };

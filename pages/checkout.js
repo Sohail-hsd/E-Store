@@ -168,7 +168,7 @@ const Checkout = ({ cart, removeFromCart, addToCart, calculateSubtotal, SubTotal
         draggable
         pauseOnHover
       />
-      <section className="min-h-screen flex text-gray-400 font-semibold bg-gray-900 body-font min-h-screen">
+      <section className="min-h-screen flex text-gray-400 font-semibold bg-gray-900 body-font">
         <div className="container px-5 mx-auto flex sm:flex-nowrap flex-wrap">
           <div className="lg:w-1/2 md:w-1/2 flex flex-col w-full md:py-8 mt-8 md:mt-0">
 
