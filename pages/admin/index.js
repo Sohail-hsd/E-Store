@@ -15,7 +15,7 @@ import createEmotionCache from "../../src/createEmotionCache";
 
 const clientSideEmotionCache = createEmotionCache();
 
-export default function Index(props) {
+export default function Dashboard(props) {
     const { emotionCache = clientSideEmotionCache, pageProps } = props;
 
     return (
@@ -51,7 +51,7 @@ export default function Index(props) {
     );
 }
 
-Index.propTypes = {
+Dashboard.propTypes = {
     // Component: PropTypes.elementType.isRequired,
     emotionCache: PropTypes.object,
     pageProps: PropTypes.object.isRequired,

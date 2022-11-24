@@ -17,6 +17,7 @@ const Products = ({ addToCart, product, varients, buyNow, error }) => {
   const [size, setsize] = useState()
 
   useEffect(() => {
+    console.log(varients)
     if (!error) {
       setcolor(product.color)
       setsize(product.size)
@@ -37,7 +38,10 @@ const Products = ({ addToCart, product, varients, buyNow, error }) => {
 
 
   const refVarient = (newColor, newSize) => {
-    let url = `${process.env.NEXT_PUBLIC_HOST}/products/${varients[newColor][newSize]['slug']}`
+    console.log(newColor)
+    console.log(newSize)
+    // console.log(varients[newSize][newColor[0]]['slug'])
+    let url = `${process.env.NEXT_PUBLIC_HOST}/products/${varients[newSize][newColor]['slug']}`
     router.push(url)
   }
 
@@ -162,28 +166,13 @@ const Products = ({ addToCart, product, varients, buyNow, error }) => {
                 <div className="flex">
 
                   <span className="mr-3">Color</span>
+                  {size && Object.keys(varients[size]).map(itemColor => {
+                    console.log(size + '  ' + itemColor)
+                    return <button onClick={() => refVarient(itemColor, size)} className={`border-2 ml-1 bg-${itemColor}-700 rounded-full w-6 h-6 focus:outline-none transition ease-in-out hover:-translate-y-0.5 hover:scale-110 duration-150 
+                    ${itemColor == color && itemColor != "white" ? 'scale-125 border-white' : 'border-gray-700'}
+                    ${itemColor == 'black' ? 'border-black' : 'border-gray-700'}`}></button>
 
-                  {Object.keys(varients).includes('black') && Object.keys(varients['black']).includes(size) &&
-                    <button onClick={() => refVarient('black', size)} className={`border-2 ml-1 bg-gray-700 rounded-full w-6 h-6 focus:outline-none ${color == 'black' ? 'border-white' : 'border-gray-700'}`}></button>
-                  }
-                  {Object.keys(varients).includes('red') && Object.keys(varients['red']).includes(size) &&
-                    <button onClick={() => refVarient('red', size)} className={`border-2 ml-1 bg-red-700 rounded-full w-6 h-6 focus:outline-none ${color == 'red' ? 'border-white' : 'border-gray-700'}`}></button>
-                  }
-                  {Object.keys(varients).includes('yellow') && Object.keys(varients['yellow']).includes(size) &&
-                    <button onClick={() => refVarient('yellow', size)} className={`border-2 ml-1 bg-yellow-700 rounded-full w-6 h-6 focus:outline-none ${color == 'yellow' ? 'border-white' : 'border-gray-700'}`}></button>
-                  }
-                  {Object.keys(varients).includes('green') && Object.keys(varients['green']).includes(size) &&
-                    <button onClick={() => refVarient('green', size)} className={`border-2 ml-1 bg-green-700 rounded-full w-6 h-6 focus:outline-none ${color == 'green' ? 'border-white' : 'border-gray-700'}`}></button>
-                  }
-                  {Object.keys(varients).includes('blue') && Object.keys(varients['blue']).includes(size) &&
-                    <button onClick={() => refVarient('blue', size)} className={`border-2 ml-1 bg-blue-700 rounded-full w-6 h-6 focus:outline-none ${color == 'blue' ? 'border-white' : 'border-gray-700'}`}></button>
-                  }
-                  {Object.keys(varients).includes('purple') && Object.keys(varients['purple']).includes(size) &&
-                    <button onClick={() => refVarient('purple', size)} className={`border-2 ml-1 bg-purple-700 rounded-full w-6 h-6 focus:outline-none ${color == 'purple' ? 'border-white' : 'border-gray-700'}`}></button>
-                  }
-                  {Object.keys(varients).includes('white') && Object.keys(varients['white']).includes(size) &&
-                    <button onClick={() => refVarient('white', size)} className={`border-2 ml-1 bg-white rounded-full w-6 h-6 focus:outline-none ${color == 'white' ? 'border-white' : 'border-gray-700'}`}></button>
-                  }
+                  })}
 
                 </div>
                 <div className="flex ml-6 items-center">
@@ -192,23 +181,12 @@ const Products = ({ addToCart, product, varients, buyNow, error }) => {
 
                     {/* Sizes */}
 
-                    <select value={size} onChange={(e) => refVarient(color, e.target.value)} className="rounded border border-gray-700 focus:ring-2 focus:ring-green-900 bg-transparent appearance-none py-2 focus:outline-none focus:border-green-500 text-gray-400 pl-3 pr-10">
-                      {/* {console.log(Object.keys(varients[color]).includes('XL'))} */}
-                      {/* {Object.keys(varients).map(itemColor => {
-                        // let colors = ['black', 'green', 'blue', 'purple', 'gray', 'red', 'white']
-                        let sizes = ['S', 'M', 'L', 'XL', 'XXL']
-                        let avilableSizes = []
-                        for(let size in varients[itemColor]){
-                            size in avilableSizes ? 'None' : avilableSizes.push(JSON.parse(JSON.stringify(size)))
-                        }
-                        console.log(avilableSizes)
-                      })} */}
-
-                      {color && Object.keys(varients[color]).includes('S') && <option value={'S'}>S</option>}
-                      {color && Object.keys(varients[color]).includes('M') && <option value={'M'}>M</option>}
-                      {color && Object.keys(varients[color]).includes('L') && <option value={'L'}>L</option>}
-                      {color && Object.keys(varients[color]).includes('XL') && <option value={'XL'}>XL</option>}
-                      {color && Object.keys(varients[color]).includes('XXL') && <option value={'XXL'}>XXL</option>}
+                    <select value={size} onChange={(e) => refVarient(Object.keys(varients[e.target.value]), e.target.value)} className="rounded border border-gray-700 focus:ring-2 focus:ring-green-900 bg-transparent appearance-none py-2 focus:outline-none focus:border-green-500 text-gray-400 pl-3 pr-10">
+                      {Object.keys(varients).includes('S') && <option value={'S'}>S</option>}
+                      {Object.keys(varients).includes('M') && <option value={'M'}>M</option>}
+                      {Object.keys(varients).includes('L') && <option value={'L'}>L</option>}
+                      {Object.keys(varients).includes('XL') && <option value={'XL'}>XL</option>}
+                      {Object.keys(varients).includes('XXL') && <option value={'XXL'}>XXL</option>}
                     </select>
                     <span className="absolute right-0 top-0 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center">
                       <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-4 h-4" viewBox="0 0 24 24">
@@ -284,23 +262,34 @@ export async function getServerSideProps(context) {
   }
 
   let varients = await Product.find({ title: product.title })
-  let colorSizeSlug = {} // { red: { XL: { slug: "Programer T-shirt" } } }
+  let sizeColorSlug = {} // { size: { color: { slug: "Programer T-shirt" } } }
 
 
+  // for (let item of varients) {
+  //   if (Object.keys(colorSizeSlug).includes(item.color)) {
+  //     colorSizeSlug[item.color][item.size] = { slug: item.slug }
+  //   }
+  //   else {
+  //     colorSizeSlug[item.color] = {}
+  //     colorSizeSlug[item.color][item.size] = { slug: item.slug }
+  //     // { color :  }
+  //     // { color : { size : { slug: "Programer T-shirt" } } }
+  //   }
+  // }
   for (let item of varients) {
-    if (Object.keys(colorSizeSlug).includes(item.color)) {
-      colorSizeSlug[item.color][item.size] = { slug: item.slug }
+    if (Object.keys(sizeColorSlug).includes(item.size)) {
+      sizeColorSlug[item.size][item.color] = { slug: item.slug }
     }
     else {
-      colorSizeSlug[item.color] = {}
-      colorSizeSlug[item.color][item.size] = { slug: item.slug }
-      // { color :  }
-      // { color : { size : { slug: "Programer T-shirt" } } }
+      sizeColorSlug[item.size] = {}
+      sizeColorSlug[item.size][item.color] = { slug: item.slug }
+      // { size :  }
+      // { size : { color : { slug: "Programer T-shirt" } } }
     }
   }
 
   return {
-    props: { error, product: JSON.parse(JSON.stringify(product)), varients: JSON.parse(JSON.stringify(colorSizeSlug)) },
+    props: { error, product: JSON.parse(JSON.stringify(product)), varients: JSON.parse(JSON.stringify(sizeColorSlug)) },
   }
 }
 

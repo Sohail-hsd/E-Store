@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { AiFillMinusCircle, AiFillPlusCircle } from 'react-icons/ai'
 import { useRouter } from 'next/router'
 import { ToastContainer, toast } from 'react-toastify';
+import Head from 'next/head'
 // import Link from 'next/link'
 // import { loadStripe } from '@stripe/stripe-js'
 

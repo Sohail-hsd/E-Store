@@ -12,7 +12,7 @@ const Menuitems = [
   {
     title: "All Products",
     icon: "grid",
-    href: "/admin/AllProducts",
+    href: "/admin/ShowProducts",
   },
   {
     title: "All Orders",
