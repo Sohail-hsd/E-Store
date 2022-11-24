@@ -264,18 +264,6 @@ export async function getServerSideProps(context) {
   let varients = await Product.find({ title: product.title })
   let sizeColorSlug = {} // { size: { color: { slug: "Programer T-shirt" } } }
 
-
-  // for (let item of varients) {
-  //   if (Object.keys(colorSizeSlug).includes(item.color)) {
-  //     colorSizeSlug[item.color][item.size] = { slug: item.slug }
-  //   }
-  //   else {
-  //     colorSizeSlug[item.color] = {}
-  //     colorSizeSlug[item.color][item.size] = { slug: item.slug }
-  //     // { color :  }
-  //     // { color : { size : { slug: "Programer T-shirt" } } }
-  //   }
-  // }
   for (let item of varients) {
     if (Object.keys(sizeColorSlug).includes(item.size)) {
       sizeColorSlug[item.size][item.color] = { slug: item.slug }
