@@ -1,26 +1,55 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { ToastContainer, toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import Head from 'next/head'
-
+import Inputs from '../components/Inputs'
 
 const Login = (user) => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
   const [remember, setRemember] = useState(false)
+  const [Credentials, setCredentials] = useState({
+    email: '',
+    password: ''
+  })
+
   const router = useRouter()
 
+  const CredentialsInputs = [
+    {
+      key: 2,
+      name: 'email',
+      type: 'email',
+      placeholder: 'Email',
+      errorMessage: 'It should be a valid email address!',
+      label: 'Email',
+      required: true,
+    },
+    {
+      key: 8,
+      name: 'password',
+      type: 'password',
+      placeholder: 'Password',
+      errorMessage: 'Invalid Password',
+      label: 'Password',
+      // pattern: '^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$',
+      required: true,
+    },
+  ]
+
   useEffect(() => {
-    if(localStorage.getItem('token') && user.value != null ){
+    if (localStorage.getItem('token') && user.value != null) {
       router.push(`/`)
     }
   }, [])
-  
+
+  const onCredintialsChange = (event) => {
+    setCredentials({ ...Credentials, [event.target.name]: event.target.value })
+    console.log(Credentials)
+  }
 
   const login = async (event) => {
     event.preventDefault()
-    const loginData = { email, password }
+    // const loginData = { email, password }
     console.log(remember)
 
     const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/Account/login`, {
@@ -28,7 +57,7 @@ const Login = (user) => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(loginData)
+      body: JSON.stringify(Credentials)
     })
     response = await response.json()
     if (response.status) {
@@ -42,8 +71,8 @@ const Login = (user) => {
         draggable: true,
         progress: undefined,
       });
-      setEmail('')
-      setPassword('')
+      setCredentials({ ...Credentials, ["email"]: '' })
+      setCredentials({ ...Credentials, ["password"]: '' })
       setTimeout(() => {
         router.push('/')
       }, 2000);
@@ -95,15 +124,17 @@ const Login = (user) => {
         </div>
         <form className="mt-8 space-y-6" onSubmit={login} method="POST">
           <input type="hidden" name="remember" value="true" />
+
           <div className="rounded-md shadow-sm space-y-2">
-            <div>
-              <label htmlFor="email-address" className="sr-only">Email address</label>
-              <input onChange={event => setEmail(event.target.value)} value={email} id="email-address" name="email" type="email" autoComplete="email" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-green-300 placeholder-gray-500 text-black rounded-t-md focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm" placeholder="Email address" />
-            </div>
-            <div>
-              <label htmlFor="password" className="sr-only">Password</label>
-              <input onChange={event => setPassword(event.target.value)} value={password} id="password" name="password" type="password" autoComplete="current-password" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-green-300 placeholder-gray-500 text-black rounded-b-md focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm" placeholder="Password" />
-            </div>
+            {CredentialsInputs.map(input => (
+              <Inputs
+                key={input.key}
+                {...input}
+                value={Credentials[input.name]}
+                onChange={onCredintialsChange}
+              />
+            ))
+            }
           </div>
 
           <div className="flex items-center justify-between">

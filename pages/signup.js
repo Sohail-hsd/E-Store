@@ -1,28 +1,227 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Head from 'next/head'
 import { ToastContainer, toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 
+
+const Inputs = ({ key, errorMessage, onChange, label, handelPinCode, ...inputProps }) => {
+  const [Focus, setFocus] = useState("false")
+  const onFocus = (e) => {
+    setFocus("true")
+  }
+  return (
+    <div className='flex flex-col mx-4'>
+      <label className="lab leading-7 text-sm text-left dark:text-gray-200 text-gray-400 font-semibold">{label}</label>
+      {inputProps.name === 'address' ?
+        <textarea {...inputProps} onChange={onChange} onBlur={onFocus} focused={Focus}
+          className='infoInputs bg-gray-800 valid:border-green-500 valid:border-2 rounded-md text-base outline-none text-gray-300 py-1 my-2 px-3 leading-8 transition-colors duration-200 ease-in-out'
+        />
+        : inputProps.name === 'areaPinCode' ?
+          <input {...inputProps} onChange={handelPinCode} onBlur={onFocus} focused={Focus}
+            className='infoInputs bg-gray-800 valid:border-green-500 valid:border-2 rounded-md text-base outline-none text-gray-300 py-1 my-2 px-3 leading-8 transition-colors duration-200 ease-in-out'
+          />
+          :
+          <input {...inputProps} onChange={onChange} onBlur={onFocus} focused={Focus}
+            className='infoInputs bg-gray-800 valid:border-green-500 valid:border-2 rounded-md text-base outline-none text-gray-300 py-1 my-2 px-3 leading-8 transition-colors duration-200 ease-in-out'
+          />
+      }
+      <span className="errMsg hidden  text-red-500 text-sm text-left  ">{errorMessage}</span>
+    </div>
+  )
+}
+
 const Signup = () => {
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [ConPassword, setConPassword] = useState('')
+  const [Values, setValues] = useState({
+    name: '',
+    email: '',
+    address: '',
+    areaPinCode: '',
+    city: '',
+    state: '',
+    phone: '',
+    areaPinCode:'',
+    password: '',
+    cpassword: ''
+  })
   const router = useRouter()
 
+  const inputs = [
+    {
+      id: 1,
+      name: 'name',
+      type: 'text',
+      placeholder: 'UserName',
+      errorMessage: 'User Name sholud be 3-16 characters and shoud`t include any special character!',
+      label: 'UserName',
+      pattern: '^[A-Za-z0-9 ]{3,16}$',
+      required: true,
+    },
+    {
+      id: 2,
+      name: 'email',
+      type: 'email',
+      placeholder: 'Email',
+      errorMessage: 'It should be a valid email address!',
+      label: 'Email',
+      required: true,
+    },
+    {
+      id: 3,
+      name: 'phone',
+      type: 'tel',
+      placeholder: 'Phone',
+      errorMessage: 'It should be a valid phone number!',
+      label: 'Phone',
+      pattern: '^[0-9*]{11,12}$',
+      required: true,
+    },
+    {
+      id: 4,
+      name: 'areaPinCode',
+      type: 'tel',
+      placeholder: 'Area Pin Code',
+      errorMessage: 'Please, Enter a valid area pin code.',
+      label: 'Area Pin Code',
+      pattern: '^[0-9*]{3,6}$',
+      required: true,
+    },
+    {
+      id: 5,
+      name: 'city',
+      type: 'text',
+      placeholder: 'City',
+      errorMessage: 'Please, Enter valid city name.',
+      label: 'City',
+      pattern: '^[A-Za-z ]{3,16}$',
+      required: true,
+    },
+    {
+      id: 6,
+      name: 'state',
+      type: 'text',
+      placeholder: 'State',
+      errorMessage: 'Please, Enter valid state name.',
+      label: 'State',
+      pattern: '^[A-Za-z ]{3,16}$',
+      required: true,
+    },
+    {
+      id: 7,
+      name: 'address',
+      type: 'text',
+      placeholder: 'Address',
+      errorMessage: 'Please, Enter valid address { city, state, country }.',
+      label: 'Address',
+      pattern: "^[a-zA-Z0-9, ]{3,}$",
+      required: true,
+    },
+    {
+      key: 8,
+      name: 'password',
+      type: 'password',
+      placeholder: 'Password',
+      errorMessage: 'Password sholud be 3-16 characters and shoud include any 2 special character!',
+      label: 'Password',
+      // pattern: '^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$',
+      required: true,
+    },
+    {
+      key: 9,
+      name: 'cpassword',
+      type: 'password',
+      placeholder: 'Conform Password',
+      errorMessage: 'Password dose`t matched!',
+      label: 'Conform Password',
+      pattern: Values.cpassword['password'],
+      required: true,
+    }
+  ]
+
   useEffect(() => {
-    if(localStorage.getItem('token')){
+    if (localStorage.getItem('token')) {
       router.push('/')
     }
   }, [])
-  
+
+  const onChange = (e) => {
+    setValues({ ...Values, [e.target.name]: e.target.value })
+  }
+
+  const handelPinCode = async (event) => {
+    /^[0-9]*$/.test(event.target.value) ? setValues({ ...Values, ["areaPinCode"]: event.target.value }) : ''
+    if (event.target.value.length == 5) {
+      let pins = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pincodes`)
+      let pinsJson = await pins.json()
+      if (Object.keys(pinsJson).includes(event.target.value)) {
+        setValues({
+          ...Values,
+          ["areaPinCode"]: event.target.value,
+          ["city"]: pinsJson[event.target.value][1],
+          ["state"]: pinsJson[event.target.value][0],
+        })
+      } else {
+        setValues({
+          ...Values,
+          ["city"]: "",
+          ["state"]: "",
+        })
+      }
+    }
+  }
+
 
   const signup = async (event) => {
     event.preventDefault()
-    const signupData = { name, email, password }
-    if (password !== ConPassword) {
-      toast.warn('Your Password dose not match with Confirm Password', {
+    try {
+      console.log(Values)
+      let response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/Account/signup`, {
+        method: 'POST', // or 'PUT'
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(Values),
+      })
+      response = await response.json()
+      if (response.status == true) {
+        toast.success('Your account has been created!', {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        setValues({
+          name: '',
+          email: '',
+          address: '',
+          areaPinCode: '',
+          city: '',
+          state: '',
+          phone: '',
+          password: '',
+          cpassword: ''
+        })
+        setTimeout(() => {
+          router.push('/login')
+          // console.log(Values)
+        }, 2000);
+      } else if (response.status == false) {
+        toast.error('Please try Again, With a valid email address', {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
+    } catch (error) {
+      console.log('Internal Server Error')
+      toast.error('Please try Again', {
         position: "top-center",
         autoClose: 2000,
         hideProgressBar: false,
@@ -31,48 +230,6 @@ const Signup = () => {
         draggable: true,
         progress: undefined,
       });
-    } else {
-
-      try {
-        let response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/Account/signup`, {
-          method: 'POST', // or 'PUT'
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(signupData),
-        })
-        response = await response.json()
-        if (response.status === true) {
-          toast.success('Your account has been created!', {
-            position: "top-center",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
-          setName('')
-          setEmail('')
-          setPassword('')
-          setConPassword('')
-          setTimeout(() => {
-            router.push('/login')
-          }, 2000);
-        } else {
-          toast.error('Please try Again, With a valid email address', {
-            position: "top-center",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
-        }
-      } catch (error) {
-        console.log('Internal Server Error')
-      }
     }
 
   }
@@ -102,7 +259,7 @@ const Signup = () => {
             src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
             alt="Workflow"
           />
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-white">SignUp in to create your account</h2>
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-white">SignUp and create your account</h2>
           <p className="mt-2 text-center text-sm text-gray-600">
             Or
             <Link href={'/login'}>
@@ -113,26 +270,16 @@ const Signup = () => {
 
         <form className="mt-8 space-y-6" onSubmit={signup} method="POST">
 
-          <div className="rounded-lg shadow-sm space-y-2">
-            <div>
-              <label htmlFor="name" className="sr-only">name</label>
-              <input onChange={(event) => setName(event.target.value)} value={name} id="name" name="name" type="name" autoComplete="name" required className="appearance-none rounded-none relative block w-full px-3 py-2 border-2 border-green-300 placeholder-gray-500 text-black rounded-t-md focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm" placeholder="name" />
-            </div>
-            <div>
-              <label htmlFor="email-address" className="sr-only">email address</label>
-              <input onChange={(event) => setEmail(event.target.value)} value={email} id="email-address" name="email" type="email" autoComplete="email" required className="appearance-none rounded-none relative block w-full px-3 py-2 border-2 border-green-300 placeholder-gray-500 text-black focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm" placeholder="email address" />
-            </div>
-            <div>
-              <label htmlFor="password" className="sr-only">password</label>
-              <input onChange={(event) => setPassword(event.target.value)} value={password} id="password" name="password" type="password" autoComplete='password' required className="appearance-none rounded-none relative block w-full px-3 py-2 border-2 border-green-300 placeholder-gray-500 text-black focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm" placeholder="password" />
-            </div>
-            <div>
-              <label htmlFor="confirm" className="sr-only">Confirm password</label>
-              <input onChange={(event) => setConPassword(event.target.value)} value={ConPassword} id="confirm" name="confirm" type="password" autoComplete='password' required className={`appearance-none rounded-none relative block w-full px-3 py-2 border-2 border-green-300 placeholder-gray-500 text-black rounded-b-md focus:z-10 sm:text-sm focus:outline-none
-            ${(password === ConPassword && password !== '') ? 'focus:ring-green-500 focus:border-green-500' : 'ring-red-500 border-red-500 border-3'}`}
-                placeholder="Confirm password" />
-              <label htmlFor=""></label>
-            </div>
+          <div className="rouned-lg shadow-sm space-y-2">
+            {inputs.map(input => (
+              <Inputs
+                key={input.id}
+                {...input}
+                value={Values[input.name]}
+                onChange={onChange}
+                handelPinCode={handelPinCode}
+              />
+            ))}
           </div>
 
           <div>

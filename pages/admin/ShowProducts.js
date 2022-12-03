@@ -35,10 +35,15 @@ export async function getServerSideProps(context) {
         mongoose.connect(process.env.MONGO_URI)
 
     }
-    let tshirt = await Product.find({ category: "T-shirt" }).limit(10)
-    let hoddies = await Product.find({ category: "Hoodies" })
-    let mugs = await Product.find({ category: "Mugs" })
-    let stickers = await Product.find({ category: 'Sticker' })
+    const PromiseTshirt =  Product.find({ category: "T-shirt" }).limit(10)
+    const PromiseHoddies =  Product.find({ category: "Hoodies" })
+    const PromiseMugs =  Product.find({ category: "Mugs" })
+    const PromiseStickers =  Product.find({ category: 'Sticker' })
+
+    const tshirt = await PromiseTshirt
+    const hoddies = await PromiseHoddies
+    const mugs = await PromiseMugs
+    const stickers = await PromiseStickers
     
     return {
         props: { 

@@ -37,12 +37,14 @@
     display: block;
 } */
 
-.infoInputs:invalid[focused="true"]  ~ .errMsg {
+.infoInputs:invalid[focused="true"]~.errMsg {
     display: block;
 }
+
 .infoInputs:invalid[focused="true"] {
     border: 2px solid rgb(202, 46, 46);
 }
+
 .infoInputs:valid:focus {
     border: 2px solid rgb(87, 207, 39);
 }

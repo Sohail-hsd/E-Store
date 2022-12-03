@@ -386,6 +386,7 @@ export default async function handler(req, res) {
     }
     else {
         // Reset Password
+        return res.status(200).json({ success: true, name: 'reseted' })
     }
 
     res.status(200).json({ name: 'John Doe' })

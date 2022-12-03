@@ -4,12 +4,12 @@ const UserSchema = new mongoose.Schema({
     // userInfoId: { type: mongoose.Schema.Types.ObjectId, ref:"UserInfo" },
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    // address: { type: String, default: '' },
-    // areaPinCode: { type: String, default: '' },
-    // city: { type: String, default: '' },
-    // phone: { type: String, default: '' },
+    password: { type: String, required: true }
+}, { timestamps: true });
 
-}, { timestamp: true });
+UserSchema.post('save', function() {
+    console.log('Saved in', Date.now() - this.createdAt, 'ms');
+    return this._id
+  });
 
 export default mongoose.models.User || mongoose.model("User", UserSchema)

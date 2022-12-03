@@ -249,7 +249,7 @@ const Products = ({ addToCart, product, varients, buyNow, error }) => {
 
 export async function getServerSideProps(context) {
   if (!mongoose.connection.readyState) {
-    await mongoose.connect(process.env.MONGO_URI)
+    mongoose.connect(process.env.MONGO_URI)
 
   }
   let product = await Product.findOne({ slug: context.query.slug })
