@@ -22,7 +22,7 @@
     "crypto-js": "^4.1.1",
     "feather-icons-react": "^0.5.0",
     "formidable": "^2.0.1",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.5.1",
     "multer": "^1.4.5-lts.1",
     "mv": "^2.1.1",
